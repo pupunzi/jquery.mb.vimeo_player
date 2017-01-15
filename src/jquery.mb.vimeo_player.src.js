@@ -226,6 +226,22 @@ var get_vimeo_videoID = function( url ) {
 
 				jQuery( document ).on( "vimeo_api_loaded", function() {
 
+					if( jQuery.browser.mobile && !vimeo_player.canPlayOnMobile ) {
+
+						if( vimeo_player.opt.mobileFallbackImage ) {
+							wrapper.css( {
+								backgroundImage: "url(" + vimeo_player.opt.mobileFallbackImage + ")",
+								backgroundPosition: "center center",
+								backgroundSize: "cover",
+								backgroundRepeat: "no-repeat",
+								opacity: 1
+							} )
+						};
+
+						$vimeo_player.remove();
+						return;
+					}
+
 					vimeo_player.player = new Vimeo.Player( playerID, options );
 
 					vimeo_player.player.ready().then( function() {
