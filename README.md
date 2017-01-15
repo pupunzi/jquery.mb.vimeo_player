@@ -1,4 +1,4 @@
-# jquery.mb.vimeo_player
+# jquery.mb.vimeoPlayer
 
 __An open source jQuery component to easily build your custom Vimeo® player or to use a Vimeo® video as background for your page.__
 
