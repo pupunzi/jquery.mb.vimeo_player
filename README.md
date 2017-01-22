@@ -4,9 +4,9 @@ __An open source jQuery component to easily build your custom Vimeo® player or 
 
 ![mb.vimeo_player](http://pupunzi.open-lab.com/wp-content/uploads/2010/06/DSC03762.jpg)
 
-## [go to the demo](http://pupunzi.com/#mb.components/mb.YTPlayer/YTPlayer.html)
-## [go to the doc](http://wiki.github.com/pupunzi/jquery.mb.vimeo_player/)
-## [go to the blog](http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-YTPlayer/)
+## [go to the demo](http://pupunzi.com/mb.components/mb.vimeoPlayer/demo/index.html)
+## [go to the doc](https://github.com/pupunzi/jQuery.mb.vimeoPlayer/wiki/Documentation)
+## [go to the blog](http://pupunzi.open-lab.com/mb-jquery-components/)
 
 
 [jquery.mb.components](http://pupunzi.com/), another way of thinking the web
