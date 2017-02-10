@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pupunzi/jquery.mb.YTPlayer.git"
+    "url": "git+https://github.com/pupunzi/jquery.mb.vimeo_player.git"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -50,5 +50,5 @@
   "directories": {
     "example": "examples"
   },
-  "buildnum": "341"
+  "buildnum": "351"
 }
