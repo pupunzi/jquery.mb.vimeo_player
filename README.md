@@ -10,3 +10,6 @@ __An open source jQuery component to easily build your custom Vimeo® player or 
 
 
 [jquery.mb.components](http://pupunzi.com/), another way of thinking the web
+
+## Available also for **Youtube**: 
+https://github.com/pupunzi/jquery.mb.YTPlayer
