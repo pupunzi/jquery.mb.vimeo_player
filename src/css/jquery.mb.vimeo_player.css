@@ -1,0 +1,329 @@
+/*___________________________________________________________________________________________________________________________________________________
+ _ jquery.mb.components                                                                                                                             _
+ _                                                                                                                                                  _
+ _ file: jquery.mb.vimeoplayer.css                                                                                                                  _
+ _ last modified: 09/12/16 14.43                                                                                                                    _
+ _                                                                                                                                                  _
+ _ Open Lab s.r.l., Florence - Italy                                                                                                                _
+ _                                                                                                                                                  _
+ _ email: matteo@open-lab.com                                                                                                                       _
+ _ site: http://pupunzi.com                                                                                                                         _
+ _       http://open-lab.com                                                                                                                        _
+ _ blog: http://pupunzi.open-lab.com                                                                                                                _
+ _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
+ _                                                                                                                                                  _
+ _ Licences: MIT, GPL                                                                                                                               _
+ _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
+ _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
+ _                                                                                                                                                  _
+ _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
+ ___________________________________________________________________________________________________________________________________________________*/
+
+
+/**
+* version: {{ version }}
+*/
+
+@charset"UTF-8";
+@font-face {
+    font-family: 'vimeo';
+    src: url('font/vimeo.eot');
+}
+
+@font-face {
+    font-family: 'vimeo';
+    src: url('font/vimeo.woff2') format('woff2'), url('font/vimeo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.vimeo_player:focus {
+    outline: 0;
+}
+
+.vimeo_player_wrapper {
+    display: block;
+    transform: translateZ(0) translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+    perspective: 1000;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+}
+
+.vimeo_player .loading {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.51);
+    text-align: center;
+    padding: 2px 4px;
+    border-radius: 5px;
+    font-family: "Droid Sans", sans-serif;
+    -webkit-animation: fade .1s infinite alternate;
+    /* Chrome, Safari, Opera */
+    animation: fade .1s infinite alternate;
+}
+
+
+/* Chrome, Safari, Opera */
+
+@-webkit-keyframes fade {
+    0% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* Standard syntax */
+
+@keyframes fade {
+    0% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.vimeo_player_Fullscreen {
+    display: block!important;
+    position: fixed!important;
+    width: 100%!important;
+    height: 100%!important;
+    top: 0!important;
+    left: 0!important;
+    margin: 0!important;
+    border: none !important;
+    opacity: 1 !important;
+    background-color: #000;
+}
+
+.vimeo_player_wrapper iframe {
+    max-width: 4000px !important;
+}
+
+.inline_vimeo_player {
+    margin-bottom: 20px;
+    vertical-align: top;
+    position: relative;
+    left: 0;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .7);
+    background: rgba(0, 0, 0, .5);
+}
+
+.inline_vimeo_player img {
+    border: none!important;
+    margin: 0!important;
+    padding: 0!important;
+    transform: none!important;
+}
+
+
+/*CONTROL BAR*/
+
+.vimeo_player_bar .vimeo_icon {
+    font-size: 20px;
+    font-family: 'vimeo';
+    cursor: pointer;
+}
+
+.vimeo_player_bar .vimeo_url.vimeo_icon {
+    position: absolute;
+    width: auto;
+    display: block;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 40px;
+}
+
+.vimeo_player_bar {
+    transition: opacity .5s;
+    display: block;
+    width: 100%;
+    height: 10px;
+    padding: 5px;
+    background: #333;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    text-align: left;
+    z-index: 1000;
+    font: 14px/16px sans-serif;
+    color: white;
+    opacity: .1;
+    box-sizing: border-box;
+}
+
+.vimeo_player_bar.visible,
+.vimeo_player_bar:hover {
+    opacity: 1;
+}
+
+.vimeo_player_bar .buttonBar {
+    transition: all .5s;
+    background: transparent;
+    font: 12px/14px Calibri;
+    position: absolute;
+    top: -30px;
+    left: 0;
+    padding: 5px;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.vimeo_player_bar:hover .buttonBar {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.vimeo_player_bar span {
+    display: inline-block;
+    font: 16px/20px Calibri, sans-serif;
+    position: relative;
+    width: 30px;
+    height: 25px;
+    vertical-align: middle;
+}
+
+.vimeo_player_bar span.vimeo_player_time {
+    width: 130px;
+}
+
+.vimeo_player_bar span.mb_YTPUrl,
+.vimeo_player_bar span.mb_OnlyYT {
+    position: absolute;
+    width: auto;
+    display: block;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.vimeo_player_bar span.mb_YTPUrl img {
+    width: 60px;
+}
+
+.vimeo_player_bar span.mb_OnlyYT {
+    left: 300px;
+    right: auto;
+}
+
+.vimeo_player_bar span.mb_OnlyYT img {
+    width: 25px;
+}
+
+.vimeo_player_bar span.mb_YTPUrl a {
+    color: white;
+}
+
+.vimeo_player_bar .vimeo_player_pause,
+.vimeo_player_bar .vimeo_player_pause img {
+    cursor: pointer;
+}
+
+.vimeo_player_bar .vimeo_player_muteUnmute {
+    cursor: pointer;
+}
+
+
+/*PROGRESS BAR*/
+
+.vimeo_player_bar .vimeo_player_pogress {
+    height: 10px;
+    width: 100%;
+    background: #222;
+    bottom: 0;
+    left: 0;
+}
+
+.vimeo_player_bar .vimeo_player_loaded {
+    height: 10px;
+    width: 0;
+    background: #444;
+    left: 0;
+}
+
+.vimeo_player_bar .vimeo_player_seek_bar {
+    height: 10px;
+    width: 0;
+    background: #2a97cc;
+    bottom: 0;
+    left: 0;
+    box-shadow: rgba(82, 82, 82, 0.47) 1px 1px 3px;
+}
+
+.vimeo_player_bar .YTPOverlay {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform-style: "flat";
+    box-sizing: border-box;
+}
+
+
+/*RASTER OVERLAY*/
+
+.vimeo_player_overlay.raster {
+    background: url("images/raster.png");
+}
+
+.vimeo_player_overlay.raster.retina {
+    background: url("images/raster@2x.png");
+}
+
+.vimeo_player_overlay.raster-dot {
+    background: url("images/raster_dot.png");
+}
+
+.vimeo_player_overlay.raster-dot.retina {
+    background: url("images/raster_dot@2x.png");
+}
+
+
+/*VOLUME SLIDER*/
+
+.vimeo_player_bar .simpleSlider {
+    position: relative;
+    width: 100px;
+    height: 10px;
+    border: 1px solid #fff;
+    overflow: hidden;
+    box-sizing: border-box;
+    margin-right: 10px;
+    cursor: pointer !important;
+    border-radius: 3px;
+}
+
+.vimeo_player_bar.compact .simpleSlider {
+    width: 40px;
+}
+
+.vimeo_player_bar .simpleSlider.muted {
+    opacity: .3;
+}
+
+.vimeo_player_bar .level {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.vimeo_player_bar .level.horizontal {
+    height: 100%;
+    width: 0;
+}
+
+.vimeo_player_bar .level.vertical {
+    height: auto;
+    width: 100%;
+}
