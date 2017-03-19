@@ -2,7 +2,7 @@
 
 __An open source jQuery component to easily build your custom Vimeo® player or to use a Vimeo® video as background for your page.__
 
-![mb.vimeo_player](http://pupunzi.com/mb.components/mb.vimeoPlayer/vimeoPlayer.jpg)
+![mb.vimeo_player](https://pupunzi.com/mb.components/mb.vimeo_player/vimeoPlayer.jpg)
 
 ## [go to the demo](https://pupunzi.com/mb.components/mb.vimeo_player/demo/index.html)
 ## [go to the doc](https://github.com/pupunzi/jQuery.mb.vimeo_player/wiki/Documentation)
@@ -10,3 +10,6 @@ __An open source jQuery component to easily build your custom Vimeo® player or 
 
 
 [jquery.mb.components](http://pupunzi.com/), another way of thinking the web
+
+## Available also for **Youtube**: 
+https://github.com/pupunzi/jquery.mb.YTPlayer
