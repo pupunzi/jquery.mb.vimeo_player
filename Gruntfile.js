@@ -141,7 +141,7 @@ module.exports = function (grunt) {
 				tagName           : '%VERSION%',
 				tagMessage        : 'Version %VERSION%',
 				push              : true,
-				pushTo            : 'https://github.com/pupunzi/jquery.mb.YTPlayer.git',
+				pushTo            : 'https://github.com/pupunzi/jquery.mb.vimeo_player.git',
 				gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
 				globalReplace     : true,
 				prereleaseName    : 'alpha',
