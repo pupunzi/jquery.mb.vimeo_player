@@ -36,8 +36,8 @@ var get_vimeo_videoID = function( url ) {
 	jQuery.vimeo_player = {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
-		version: "1.0.1",
-		build: "354",
+		version: "1.0.3",
+		build: "355",
 		defaults: {
 			containment: "body",
 			ratio: "16/9", // "auto", "16/9", "4/3"
