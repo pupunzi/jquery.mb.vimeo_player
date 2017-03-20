@@ -178,7 +178,8 @@ var get_vimeo_videoID = function( url ) {
 					src: "//player.vimeo.com/video/" + vimeo_player.videoID + "?background=1"
 				} );
 
-				wrapper.append( vimeo_player.playerBox );
+				if( !jQuery.browser.mobile || vimeo_player.canPlayOnMobile )
+					wrapper.append( vimeo_player.playerBox );
 
 				vimeo_player.opt.containment.children().not( "script, style" ).each( function() {
 					if( jQuery( this ).css( "position" ) == "static" ) jQuery( this ).css( "position", "relative" );
