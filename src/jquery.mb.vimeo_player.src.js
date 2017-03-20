@@ -31,6 +31,7 @@ var get_vimeo_videoID = function( url ) {
 	return videoID
 };
 
+
 ( function( $ ) {
 	jQuery.vimeo_player = {
 		name: "jquery.mb.vimeo_player",
