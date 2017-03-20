@@ -425,8 +425,8 @@ var get_vimeo_videoID = function( url ) {
 								vimeo_player.overlay.removeClass( function( index, classNames ) {
 									// change the list into an array
 									var current_classes = classNames.split( " " ),
-									// array of classes which are to be removed
-											classes_to_remove = [];
+										// array of classes which are to be removed
+										classes_to_remove = [];
 									jQuery.each( current_classes, function( index, class_name ) {
 										// if the classname begins with bg add it to the classes_to_remove array
 										if( /raster.*/.test( class_name ) ) {
@@ -839,7 +839,7 @@ var get_vimeo_videoID = function( url ) {
 
 		fullscreen: function( real ) {
 			var vimeo_player = this.get( 0 );
-			var $vimeo_player = jQuery(vimeo_player);
+			var $vimeo_player = jQuery( vimeo_player );
 			var VEvent;
 
 			if( typeof real == "undefined" ) real = vimeo_player.opt.realfullscreen;
@@ -935,7 +935,7 @@ var get_vimeo_videoID = function( url ) {
 			function RunPrefixMethod( obj, method ) {
 				var pfx = [ "webkit", "moz", "ms", "o", "" ];
 				var p = 0,
-						m, t;
+					m, t;
 				while( p < pfx.length && !obj[ m ] ) {
 					m = method;
 					if( pfx[ p ] == "" ) {
