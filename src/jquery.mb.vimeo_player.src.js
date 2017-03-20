@@ -245,6 +245,8 @@ var get_vimeo_videoID = function( url ) {
 
 					vimeo_player.player.ready().then( function() {
 
+						var VEvent;
+
 						function start() {
 							vimeo_player.isReady = true;
 
@@ -259,9 +261,17 @@ var get_vimeo_videoID = function( url ) {
 							if( vimeo_player.opt.autoPlay )
 								setTimeout( function() {
 									$vimeo_player.v_play();
+
+									VEvent = jQuery.Event( 'VPStart' );
+									$vimeo_player.trigger( VEvent );
+
 								}, 1000 );
 							else
 								$vimeo_player.v_pause();
+
+							VEvent = jQuery.Event( 'VPReady' );
+							$vimeo_player.trigger( VEvent );
+
 						}
 
 						if( vimeo_player.opt.startAt ) {
@@ -291,6 +301,10 @@ var get_vimeo_videoID = function( url ) {
 						vimeo_player.player.on( "error", function( data ) {
 							vimeo_player.state = -1;
 							//console.debug( "error:: ", data );
+							// Trigger state events
+							VEvent = jQuery.Event( 'VPError' );
+							VEvent.error = data;
+							$vimeo_player.trigger( VEvent );
 						} );
 
 						//PLAY
@@ -304,6 +318,11 @@ var get_vimeo_videoID = function( url ) {
 							if( typeof _gaq != "undefined" && eval( vimeo_player.opt.gaTrack ) ) _gaq.push( [ '_trackEvent', 'vimeo_player', 'Play', vimeo_player.videoID ] );
 							if( typeof ga != "undefined" && eval( vimeo_player.opt.gaTrack ) ) ga( 'send', 'event', 'vimeo_player', 'play', vimeo_player.videoID );
 
+							// Trigger state events
+							VEvent = jQuery.Event( 'VPPlay' );
+							VEvent.error = data;
+							$vimeo_player.trigger( VEvent );
+
 						} );
 
 						//PAUSE
@@ -313,6 +332,11 @@ var get_vimeo_videoID = function( url ) {
 
 							if( vimeo_player.controlBar && vimeo_player.controlBar.length )
 								vimeo_player.controlBar.find( ".vimeo_player_pause" ).html( jQuery.vimeo_player.controls.play );
+
+							VEvent = jQuery.Event( 'VPPause' );
+							VEvent.time = data;
+							$vimeo_player.trigger( VEvent );
+
 						} );
 
 						//SEEKED
@@ -325,6 +349,11 @@ var get_vimeo_videoID = function( url ) {
 						vimeo_player.player.on( "ended", function( data ) {
 							vimeo_player.state = 0;
 							$vimeo_player.trigger( "change_state" );
+
+							VEvent = jQuery.Event( 'VPEnd' );
+							VEvent.time = data;
+							$vimeo_player.trigger( VEvent );
+
 						} );
 
 						//TIME UPDATE
@@ -396,8 +425,8 @@ var get_vimeo_videoID = function( url ) {
 								vimeo_player.overlay.removeClass( function( index, classNames ) {
 									// change the list into an array
 									var current_classes = classNames.split( " " ),
-										// array of classes which are to be removed
-										classes_to_remove = [];
+									// array of classes which are to be removed
+											classes_to_remove = [];
 									jQuery.each( current_classes, function( index, class_name ) {
 										// if the classname begins with bg add it to the classes_to_remove array
 										if( /raster.*/.test( class_name ) ) {
@@ -427,6 +456,11 @@ var get_vimeo_videoID = function( url ) {
 									$vimeo_player.trigger( "change_state" );
 								}
 							}
+
+							// Trigger state events
+							VEvent = jQuery.Event( 'VPTime' );
+							VEvent.time = data.seconds;
+							$vimeo_player.trigger( VEvent );
 
 						} );
 
@@ -805,6 +839,9 @@ var get_vimeo_videoID = function( url ) {
 
 		fullscreen: function( real ) {
 			var vimeo_player = this.get( 0 );
+			var $vimeo_player = jQuery(vimeo_player);
+			var VEvent;
+
 			if( typeof real == "undefined" ) real = vimeo_player.opt.realfullscreen;
 			real = eval( real );
 			var controls = jQuery( "#controlBar_" + vimeo_player.id );
@@ -832,9 +869,14 @@ var get_vimeo_videoID = function( url ) {
 							vimeo_player.wrapper.before( controls );
 						}
 						jQuery( window ).resize();
-						jQuery( vimeo_player ).trigger( "vimeo_player_fullScreenEnd" );
+						// Trigger state events
+						VEvent = jQuery.Event( 'VPFullScreenEnd' );
+						$vimeo_player.trigger( VEvent );
+
 					} else {
-						jQuery( vimeo_player ).trigger( "vimeo_player_fullScreenStart" );
+						// Trigger state events
+						VEvent = jQuery.Event( 'VPFullScreenStart' );
+						$vimeo_player.trigger( VEvent );
 					}
 				} );
 			}
@@ -893,7 +935,7 @@ var get_vimeo_videoID = function( url ) {
 			function RunPrefixMethod( obj, method ) {
 				var pfx = [ "webkit", "moz", "ms", "o", "" ];
 				var p = 0,
-					m, t;
+						m, t;
 				while( p < pfx.length && !obj[ m ] ) {
 					m = method;
 					if( pfx[ p ] == "" ) {
