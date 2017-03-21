@@ -295,7 +295,7 @@ var get_vimeo_videoID = function( url ) {
 
 						//PROGRESS
 						vimeo_player.player.on( "progress", function( data ) {
-							//console.debug( "progress:: ", data );
+							console.debug( "progress:: ", data );
 						} );
 
 						//ERROR
@@ -359,12 +359,6 @@ var get_vimeo_videoID = function( url ) {
 
 						//TIME UPDATE
 						vimeo_player.player.on( "timeupdate", function( data ) {
-
-							if( vimeo_player.seconds && Math.floor( data.seconds ) != Math.floor( vimeo_player.seconds ) ) {
-								var vimeo_time = jQuery.Event( "VPUpdate" );
-								vimeo_time.time = Math.floor( vimeo_player.seconds );
-								jQuery( vimeo_player ).trigger( vimeo_time );
-							}
 
 							vimeo_player.duration = data.duration;
 							vimeo_player.percent = data.percent;

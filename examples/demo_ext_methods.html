@@ -173,7 +173,7 @@
 
             myPlayer = jQuery("#bgndVideo").vimeo_player({mobileFallbackImage:"https://camo.githubusercontent.com/7316ea8523a142146ee0073fabf74589bc485269/68747470733a2f2f707570756e7a692e636f6d2f6d622e636f6d706f6e656e74732f6d622e76696d656f5f706c617965722f76696d656f506c617965722e6a7067"});
 
-            myPlayer.on("VPUpdate", function (e) {
+            myPlayer.on("VPTime", function (e) {
                 //console.debug(Math.floor(e.time));
                 $("#time").html(Math.floor(e.time));
             }).on("VPStart", function(){
