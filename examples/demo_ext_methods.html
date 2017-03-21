@@ -81,7 +81,6 @@
             text-align: left;
         }
 
-
         button, .button {
             transition: all .4s;
             display: inline-block;
@@ -123,6 +122,43 @@
             display: none;
         }
 
+        #loader {
+            position: fixed;
+            top:0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            background: rgba(0,0,0,0.8);
+        }
+
+        #loading{
+            position: fixed;
+            top:0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100px;
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+            margin: auto;
+
+            /*animation: stretch 1s ease-out 0s alternate infinite;*/
+        }
+
+/*
+        @keyframes stretch {
+            0% {
+                color:#000;
+            }
+
+            100% {
+                color:#fff;
+            }
+        }
+*/
+
     </style>
 
     <script>
@@ -137,10 +173,12 @@
 
             myPlayer = jQuery("#bgndVideo").vimeo_player({mobileFallbackImage:"https://camo.githubusercontent.com/7316ea8523a142146ee0073fabf74589bc485269/68747470733a2f2f707570756e7a692e636f6d2f6d622e636f6d706f6e656e74732f6d622e76696d656f5f706c617965722f76696d656f506c617965722e6a7067"});
 
-            myPlayer.on("v_time_update", function (e) {
-
-               // console.debug(Math.floor(e.time));
-
+            myPlayer.on("VPUpdate", function (e) {
+                //console.debug(Math.floor(e.time));
+                $("#time").html(Math.floor(e.time));
+            }).on("VPStart", function(){
+                console.debug("START----------");
+                $("#loader").fadeOut(500);
             });
         });
 
@@ -150,6 +188,8 @@
 <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
     <h1 style="color:white">jQuery.mb.vimeo_player</h1>
     <h2 style="color:white; text-align: center">An HTML5 Background player<br>for Vimeo's video</h2>
+    <h2 id="time" style="color:white; text-align: center">0</h2>
+    <div id="loader"><div id="loading">Loading video</div></div>
     <div class="console">
         <h2 style="color:white">Available methods to control the video</h2>
         <button onclick="myPlayer.v_pause()">v_pause</button>
@@ -162,24 +202,6 @@
         <button onclick="myPlayer.v_toggle_volume()">v_toggle_volume</button>
         <button onclick="myPlayer.v_set_volume(80)">v_set_volume (80)</button>
         <br><br>
-        <!--
-                <button onclick="showInfo(myPlayer.YTPGetVideoID())">YTPGetVideoID</button>
-                <button onclick="showInfo(myPlayer.YTPGetAlign())">YTPGetAlign</button>
-                <button onclick="showInfo(myPlayer.YTPGetTime())">YTPGetTime</button>
-                <button onclick="showInfo(myPlayer.YTPGetTotalTime())">YTPGetTotalTime</button>
-                <br><br>
-        -->
-        <!--
-                <button onclick="myPlayer.YTPToggleFilter('grayscale', 100)">YTPToggleFilter (grayscale)</button>
-                <button onclick="myPlayer.YTPToggleFilter('sepia', 100)">YTPToggleFilter (sepia)</button>
-                <a href="demo.html">(Play with filters)</a>
-                <br><br>
-        -->
-        <!--
-                <button onclick="myPlayer.YTPAddMask('assets/mask-4.png')">YTPAddMask</button>
-                <button onclick="myPlayer.YTPRemoveMask()">YTPRemoveMask</button>
-                <br><br>
-        -->
         <button onclick="myPlayer.v_set_align('left,top')">v_set_align (top/left)</button>
         <button onclick="myPlayer.v_set_align('center,center')">v_set_align (center/center)</button>
         <button onclick="myPlayer.v_set_align('right,bottom')">v_set_align (right/bottom)</button>

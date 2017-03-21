@@ -180,6 +180,20 @@ var get_vimeo_videoID = function( url ) {
 
 				if( !jQuery.browser.mobile || vimeo_player.canPlayOnMobile )
 					wrapper.append( vimeo_player.playerBox );
+				else {
+					if( vimeo_player.opt.mobileFallbackImage ) {
+						wrapper.css( {
+							backgroundImage: "url(" + vimeo_player.opt.mobileFallbackImage + ")",
+							backgroundPosition: "center center",
+							backgroundSize: "cover",
+							backgroundRepeat: "no-repeat",
+							opacity: 1
+						} )
+					};
+
+					$vimeo_player.remove();
+					return;
+				}
 
 				vimeo_player.opt.containment.children().not( "script, style" ).each( function() {
 					if( jQuery( this ).css( "position" ) == "static" ) jQuery( this ).css( "position", "relative" );
@@ -226,24 +240,7 @@ var get_vimeo_videoID = function( url ) {
 
 				jQuery( document ).on( "vimeo_api_loaded", function() {
 
-					if( jQuery.browser.mobile && !vimeo_player.canPlayOnMobile ) {
-
-						if( vimeo_player.opt.mobileFallbackImage ) {
-							wrapper.css( {
-								backgroundImage: "url(" + vimeo_player.opt.mobileFallbackImage + ")",
-								backgroundPosition: "center center",
-								backgroundSize: "cover",
-								backgroundRepeat: "no-repeat",
-								opacity: 1
-							} )
-						};
-
-						$vimeo_player.remove();
-						return;
-					}
-
 					vimeo_player.player = new Vimeo.Player( playerID, options );
-
 					vimeo_player.player.ready().then( function() {
 
 						var VEvent;
@@ -261,12 +258,15 @@ var get_vimeo_videoID = function( url ) {
 
 							if( vimeo_player.opt.autoPlay )
 								setTimeout( function() {
+
 									$vimeo_player.v_play();
 
-									VEvent = jQuery.Event( 'VPStart' );
-									$vimeo_player.trigger( VEvent );
+									setTimeout( function() {
+										VEvent = jQuery.Event( 'VPStart' );
+										$vimeo_player.trigger( VEvent );
+									}, 1500 )
 
-								}, 1000 );
+								}, 100 );
 							else
 								$vimeo_player.v_pause();
 
@@ -361,7 +361,7 @@ var get_vimeo_videoID = function( url ) {
 						vimeo_player.player.on( "timeupdate", function( data ) {
 
 							if( vimeo_player.seconds && Math.floor( data.seconds ) != Math.floor( vimeo_player.seconds ) ) {
-								var vimeo_time = jQuery.Event( "v_time_update" );
+								var vimeo_time = jQuery.Event( "VPUpdate" );
 								vimeo_time.time = Math.floor( vimeo_player.seconds );
 								jQuery( vimeo_player ).trigger( vimeo_time );
 							}
@@ -494,7 +494,7 @@ var get_vimeo_videoID = function( url ) {
 			vimeo_player.player.play();
 			setTimeout( function() {
 				vimeo_player.wrapper.fadeTo( 1000, vimeo_player.opt.opacity );
-			}, 2000 );
+			}, 1000 );
 
 			var controls = jQuery( "#controlBar_" + vimeo_player.id );
 
