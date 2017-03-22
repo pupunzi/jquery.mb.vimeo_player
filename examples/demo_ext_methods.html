@@ -144,10 +144,10 @@
             text-align: center;
             margin: auto;
 
-            /*animation: stretch 1s ease-out 0s alternate infinite;*/
+            animation: stretch 1s ease-out 0s alternate infinite;
         }
 
-/*
+
         @keyframes stretch {
             0% {
                 color:#000;
@@ -157,27 +157,36 @@
                 color:#fff;
             }
         }
-*/
+
 
     </style>
 
     <script>
         var myPlayer;
-
-        function showInfo(info){
-            $("#info").stop().delay(500).html(info).stop().fadeIn().delay(5000).fadeOut();
-        }
-
         jQuery(function () {
             var isIframe=function(){var a=!1;try{self.location.href!=top.location.href&&(a=!0)}catch(b){a=!0}return a};if(!isIframe()){var logo=$("<a href='http://pupunzi.com/#mb.components/components.html' style='position:absolute;top:0;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");$("#wrapper").prepend(logo),$("#logo").fadeIn()}
 
+            /**
+             * Initialize the Vimeo Player with a fallback image for mobile
+             */
             myPlayer = jQuery("#bgndVideo").vimeo_player({mobileFallbackImage:"https://camo.githubusercontent.com/7316ea8523a142146ee0073fabf74589bc485269/68747470733a2f2f707570756e7a692e636f6d2f6d622e636f6d706f6e656e74732f6d622e76696d656f5f706c617965722f76696d656f506c617965722e6a7067"});
 
+            /**
+             * Bind custom events
+             */
             myPlayer.on("VPTime", function (e) {
-                //console.debug(Math.floor(e.time));
+
+                /**
+                 * VPTime:
+                 * Trace the time
+                 */
                 $("#time").html(Math.floor(e.time));
             }).on("VPStart", function(){
-                console.debug("START----------");
+
+                /**
+                 * VPStart:
+                 * Hide the loader once the player start
+                 */
                 $("#loader").fadeOut(500);
             });
         });
