@@ -40,7 +40,7 @@ var get_vimeo_videoID = function( url ) {
 		build: "{{ buildnum }}",
 		defaults: {
 			containment: "body",
-			ratio: "16/9", // "16/9", "4/3"
+			ratio: "16/9", // "16/9" or "4/3"
 			videoURL: null,
 			startAt: 0,
 			stopAt: 0,
