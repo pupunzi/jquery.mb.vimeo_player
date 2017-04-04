@@ -36,11 +36,11 @@ var get_vimeo_videoID = function( url ) {
 	jQuery.vimeo_player = {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
-		version: "1.0.6",
-		build: "379",
+		version: "1.0.7",
+		build: "382",
 		defaults: {
 			containment: "body",
-			ratio: "16/9", // "16/9", "4/3" or
+			ratio: "16/9", // "16/9" or "4/3"
 			videoURL: null,
 			startAt: 0,
 			stopAt: 0,
@@ -179,9 +179,9 @@ var get_vimeo_videoID = function( url ) {
 					src: "//player.vimeo.com/video/" + vimeo_player.videoID + "?background=1"
 				} );
 
-				if( !jQuery.browser.mobile || vimeo_player.canPlayOnMobile )
+				if( !jQuery.browser.mobile || vimeo_player.canPlayOnMobile ) {
 					wrapper.append( vimeo_player.playerBox );
-				else {
+				} else {
 					if( vimeo_player.opt.mobileFallbackImage ) {
 						wrapper.css( {
 							backgroundImage: "url(" + vimeo_player.opt.mobileFallbackImage + ")",
@@ -190,10 +190,10 @@ var get_vimeo_videoID = function( url ) {
 							backgroundRepeat: "no-repeat",
 							opacity: 1
 						} )
-					};
+					}
 
 					$vimeo_player.remove();
-					return;
+					//					return;
 				}
 
 				vimeo_player.opt.containment.children().not( "script, style" ).each( function() {
@@ -239,247 +239,247 @@ var get_vimeo_videoID = function( url ) {
 					} );
 				}
 
-				jQuery( document ).on( "vimeo_api_loaded", function() {
+				if( !jQuery.browser.mobile || vimeo_player.canPlayOnMobile )
+					jQuery( document ).on( "vimeo_api_loaded", function() {
 
-					vimeo_player.player = new Vimeo.Player( playerID, options );
-					vimeo_player.player.ready().then( function() {
+						vimeo_player.player = new Vimeo.Player( playerID, options );
+						vimeo_player.player.ready().then( function() {
 
-						var VEvent;
+							var VEvent;
 
-						function start() {
-							vimeo_player.isReady = true;
+							function start() {
+								vimeo_player.isReady = true;
 
-							if( vimeo_player.opt.mute )
-								setTimeout( function() {
-									$vimeo_player.v_mute();
-								}, 1000 );
-
-							if( vimeo_player.opt.showControls )
-								jQuery.vimeo_player.buildControls( vimeo_player );
-
-							if( vimeo_player.opt.autoPlay )
-								setTimeout( function() {
-
-									$vimeo_player.v_play();
-
+								if( vimeo_player.opt.mute )
 									setTimeout( function() {
-										VEvent = jQuery.Event( 'VPStart' );
-										$vimeo_player.trigger( VEvent );
-									}, 1500 )
+										$vimeo_player.v_mute();
+									}, 1000 );
 
-								}, 100 );
-							else
-								$vimeo_player.v_pause();
+								if( vimeo_player.opt.showControls )
+									jQuery.vimeo_player.buildControls( vimeo_player );
 
-							VEvent = jQuery.Event( 'VPReady' );
-							$vimeo_player.trigger( VEvent );
+								if( vimeo_player.opt.autoPlay )
+									setTimeout( function() {
 
-						}
+										$vimeo_player.v_play();
 
-						if( vimeo_player.opt.startAt ) {
+										setTimeout( function() {
+											VEvent = jQuery.Event( 'VPStart' );
+											$vimeo_player.trigger( VEvent );
+										}, 1500 )
 
-							vimeo_player.player.play().then( function() {
-								vimeo_player.player.pause();
-							} );
+									}, 100 );
+								else
+									$vimeo_player.v_pause();
 
-							$vimeo_player.v_seekTo( vimeo_player.opt.startAt, function() {
-								start()
-							} );
+								VEvent = jQuery.Event( 'VPReady' );
+								$vimeo_player.trigger( VEvent );
 
-						} else
-							start();
+							}
 
-						$vimeo_player.v_optimize_display();
-						jQuery( window ).off( "resize.vimeo_player_" + vimeo_player.id ).on( "resize.vimeo_player_" + vimeo_player.id, function() {
+							if( vimeo_player.opt.startAt ) {
+
+								vimeo_player.player.play().then( function() {
+									vimeo_player.player.pause();
+								} );
+
+								$vimeo_player.v_seekTo( vimeo_player.opt.startAt, function() {
+									start()
+								} );
+
+							} else
+								start();
+
 							$vimeo_player.v_optimize_display();
-						} );
-
-						//PROGRESS
-						vimeo_player.player.on( "progress", function( data ) {
-							VEvent = jQuery.Event( 'VPProgress' );
-							VEvent.data = data;
-							$vimeo_player.trigger( VEvent );
-
-							console.debug( "1. progress:: ", data );
-
-						} );
-
-						//ERROR
-						vimeo_player.player.on( "error", function( data ) {
-							vimeo_player.state = -1;
-							//console.debug( "error:: ", data );
-							// Trigger state events
-							VEvent = jQuery.Event( 'VPError' );
-							VEvent.error = data;
-							$vimeo_player.trigger( VEvent );
-						} );
-
-						//PLAY
-						vimeo_player.player.on( "play", function( data ) {
-							vimeo_player.state = 1;
-							$vimeo_player.trigger( "change_state" );
-
-							if( vimeo_player.controlBar && vimeo_player.controlBar.length )
-								vimeo_player.controlBar.find( ".vimeo_player_pause" ).html( jQuery.vimeo_player.controls.pause );
-
-							if( typeof _gaq != "undefined" && eval( vimeo_player.opt.gaTrack ) ) _gaq.push( [ '_trackEvent', 'vimeo_player', 'Play', vimeo_player.videoID ] );
-							if( typeof ga != "undefined" && eval( vimeo_player.opt.gaTrack ) ) ga( 'send', 'event', 'vimeo_player', 'play', vimeo_player.videoID );
-
-							// Trigger state events
-							VEvent = jQuery.Event( 'VPPlay' );
-							VEvent.error = data;
-							$vimeo_player.trigger( VEvent );
-
-						} );
-
-						//PAUSE
-						vimeo_player.player.on( "pause", function( data ) {
-							vimeo_player.state = 2;
-							$vimeo_player.trigger( "change_state" );
-
-							if( vimeo_player.controlBar && vimeo_player.controlBar.length )
-								vimeo_player.controlBar.find( ".vimeo_player_pause" ).html( jQuery.vimeo_player.controls.play );
-
-							VEvent = jQuery.Event( 'VPPause' );
-							VEvent.time = data;
-							$vimeo_player.trigger( VEvent );
-
-						} );
-
-						//SEEKED
-						vimeo_player.player.on( "seeked", function( data ) {
-							vimeo_player.state = 3;
-							$vimeo_player.trigger( "change_state" )
-						} );
-
-						//ENDED
-						vimeo_player.player.on( "ended", function( data ) {
-							vimeo_player.state = 0;
-							$vimeo_player.trigger( "change_state" );
-
-							VEvent = jQuery.Event( 'VPEnd' );
-							VEvent.time = data;
-							$vimeo_player.trigger( VEvent );
-
-						} );
-
-						//TIME UPDATE
-						vimeo_player.player.on( "timeupdate", function( data ) {
-
-
-							console.debug( "2. timeupdate:: ", data );
-
-							vimeo_player.duration = data.duration;
-							vimeo_player.percent = data.percent;
-							vimeo_player.seconds = data.seconds;
-
-							vimeo_player.state = 1;
-							vimeo_player.player.getPaused().then( function( paused ) {
-								if( paused )
-									vimeo_player.state = 2;
+							jQuery( window ).off( "resize.vimeo_player_" + vimeo_player.id ).on( "resize.vimeo_player_" + vimeo_player.id, function() {
+								$vimeo_player.v_optimize_display();
 							} );
 
-							if( vimeo_player.opt.stopMovieOnBlur ) {
-								if( !document.hasFocus() ) {
-									if( vimeo_player.state == 1 ) {
-										vimeo_player.hasFocus = false;
-										$vimeo_player.v_pause();
-										vimeo_player.document_focus = setInterval( function() {
-											if( document.hasFocus() && !vimeo_player.hasFocus ) {
-												vimeo_player.hasFocus = true;
-												$vimeo_player.v_play();
-												clearInterval( vimeo_player.document_focus );
-											}
-										}, 300 );
+							//PROGRESS
+							vimeo_player.player.on( "progress", function( data ) {
+								VEvent = jQuery.Event( 'VPProgress' );
+								VEvent.data = data;
+								$vimeo_player.trigger( VEvent );
+
+								//							console.debug( "1. progress:: ", data );
+
+							} );
+
+							//ERROR
+							vimeo_player.player.on( "error", function( data ) {
+								vimeo_player.state = -1;
+								//console.debug( "error:: ", data );
+								// Trigger state events
+								VEvent = jQuery.Event( 'VPError' );
+								VEvent.error = data;
+								$vimeo_player.trigger( VEvent );
+							} );
+
+							//PLAY
+							vimeo_player.player.on( "play", function( data ) {
+								vimeo_player.state = 1;
+								$vimeo_player.trigger( "change_state" );
+
+								if( vimeo_player.controlBar && vimeo_player.controlBar.length )
+									vimeo_player.controlBar.find( ".vimeo_player_pause" ).html( jQuery.vimeo_player.controls.pause );
+
+								if( typeof _gaq != "undefined" && eval( vimeo_player.opt.gaTrack ) ) _gaq.push( [ '_trackEvent', 'vimeo_player', 'Play', vimeo_player.videoID ] );
+								if( typeof ga != "undefined" && eval( vimeo_player.opt.gaTrack ) ) ga( 'send', 'event', 'vimeo_player', 'play', vimeo_player.videoID );
+
+								// Trigger state events
+								VEvent = jQuery.Event( 'VPPlay' );
+								VEvent.error = data;
+								$vimeo_player.trigger( VEvent );
+
+							} );
+
+							//PAUSE
+							vimeo_player.player.on( "pause", function( data ) {
+								vimeo_player.state = 2;
+								$vimeo_player.trigger( "change_state" );
+
+								if( vimeo_player.controlBar && vimeo_player.controlBar.length )
+									vimeo_player.controlBar.find( ".vimeo_player_pause" ).html( jQuery.vimeo_player.controls.play );
+
+								VEvent = jQuery.Event( 'VPPause' );
+								VEvent.time = data;
+								$vimeo_player.trigger( VEvent );
+
+							} );
+
+							//SEEKED
+							vimeo_player.player.on( "seeked", function( data ) {
+								vimeo_player.state = 3;
+								$vimeo_player.trigger( "change_state" )
+							} );
+
+							//ENDED
+							vimeo_player.player.on( "ended", function( data ) {
+								vimeo_player.state = 0;
+								$vimeo_player.trigger( "change_state" );
+
+								VEvent = jQuery.Event( 'VPEnd' );
+								VEvent.time = data;
+								$vimeo_player.trigger( VEvent );
+
+							} );
+
+							//TIME UPDATE
+							vimeo_player.player.on( "timeupdate", function( data ) {
+
+								//							console.debug( "2. timeupdate:: ", data );
+
+								vimeo_player.duration = data.duration;
+								vimeo_player.percent = data.percent;
+								vimeo_player.seconds = data.seconds;
+
+								vimeo_player.state = 1;
+								vimeo_player.player.getPaused().then( function( paused ) {
+									if( paused )
+										vimeo_player.state = 2;
+								} );
+
+								if( vimeo_player.opt.stopMovieOnBlur ) {
+									if( !document.hasFocus() ) {
+										if( vimeo_player.state == 1 ) {
+											vimeo_player.hasFocus = false;
+											$vimeo_player.v_pause();
+											vimeo_player.document_focus = setInterval( function() {
+												if( document.hasFocus() && !vimeo_player.hasFocus ) {
+													vimeo_player.hasFocus = true;
+													$vimeo_player.v_play();
+													clearInterval( vimeo_player.document_focus );
+												}
+											}, 300 );
+										}
 									}
 								}
-							}
 
-							if( vimeo_player.opt.showControls ) {
-								var controls = jQuery( "#controlBar_" + vimeo_player.id );
-								var progressBar = controls.find( ".vimeo_player_pogress" );
-								var loadedBar = controls.find( ".vimeo_player_loaded" );
-								var timeBar = controls.find( ".vimeo_player_seek_bar" );
-								var totW = progressBar.outerWidth();
-								var currentTime = Math.floor( data.seconds );
-								var totalTime = Math.floor( data.duration );
-								var timeW = ( currentTime * totW ) / totalTime;
-								var startLeft = 0;
-								var loadedW = data.percent * 100;
-								loadedBar.css( {
-									left: startLeft,
-									width: loadedW + "%"
-								} );
-								timeBar.css( {
-									left: 0,
-									width: timeW
-								} );
-
-								if( data.duration ) {
-									vimeo_player.controlBar.find( ".vimeo_player_time" ).html( jQuery.vimeo_player.formatTime( data.seconds ) + " / " + jQuery.vimeo_player.formatTime( data.duration ) );
-								} else {
-									vimeo_player.controlBar.find( ".vimeo_player_time" ).html( "-- : -- / -- : --" );
-								}
-							}
-
-							if( vimeo_player.opt.addRaster ) {
-								var classN = vimeo_player.opt.addRaster == "dot" ? "raster-dot" : "raster";
-								vimeo_player.overlay.addClass( vimeo_player.isRetina ? classN + " retina" : classN );
-							} else {
-								vimeo_player.overlay.removeClass( function( index, classNames ) {
-									// change the list into an array
-									var current_classes = classNames.split( " " ),
-										// array of classes which are to be removed
-										classes_to_remove = [];
-									jQuery.each( current_classes, function( index, class_name ) {
-										// if the classname begins with bg add it to the classes_to_remove array
-										if( /raster.*/.test( class_name ) ) {
-											classes_to_remove.push( class_name );
-										}
+								if( vimeo_player.opt.showControls ) {
+									var controls = jQuery( "#controlBar_" + vimeo_player.id );
+									var progressBar = controls.find( ".vimeo_player_pogress" );
+									var loadedBar = controls.find( ".vimeo_player_loaded" );
+									var timeBar = controls.find( ".vimeo_player_seek_bar" );
+									var totW = progressBar.outerWidth();
+									var currentTime = Math.floor( data.seconds );
+									var totalTime = Math.floor( data.duration );
+									var timeW = ( currentTime * totW ) / totalTime;
+									var startLeft = 0;
+									var loadedW = data.percent * 100;
+									loadedBar.css( {
+										left: startLeft,
+										width: loadedW + "%"
 									} );
-									classes_to_remove.push( "retina" );
-									// turn the array back into a string
-									return classes_to_remove.join( " " );
-								} )
-							}
+									timeBar.css( {
+										left: 0,
+										width: timeW
+									} );
 
-							vimeo_player.opt.stopAt = vimeo_player.opt.stopAt > data.duration ? data.duration - 0.6 : vimeo_player.opt.stopAt;
-							var end_time = vimeo_player.opt.stopAt || data.duration - 0.6;
-
-							if( data.seconds >= end_time ) {
-
-								vimeo_player.loop = vimeo_player.loop || 0;
-
-								if( vimeo_player.opt.loop && vimeo_player.loop < vimeo_player.opt.loop ) {
-									$vimeo_player.v_seekTo( vimeo_player.opt.startAt );
-									vimeo_player.loop++;
-
-								} else {
-									$vimeo_player.v_pause();
-									vimeo_player.state = 0;
-									$vimeo_player.trigger( "change_state" );
+									if( data.duration ) {
+										vimeo_player.controlBar.find( ".vimeo_player_time" ).html( jQuery.vimeo_player.formatTime( data.seconds ) + " / " + jQuery.vimeo_player.formatTime( data.duration ) );
+									} else {
+										vimeo_player.controlBar.find( ".vimeo_player_time" ).html( "-- : -- / -- : --" );
+									}
 								}
-							}
 
-							// Trigger state events
-							VEvent = jQuery.Event( 'VPTime' );
-							VEvent.time = data.seconds;
-							$vimeo_player.trigger( VEvent );
+								if( vimeo_player.opt.addRaster ) {
+									var classN = vimeo_player.opt.addRaster == "dot" ? "raster-dot" : "raster";
+									vimeo_player.overlay.addClass( vimeo_player.isRetina ? classN + " retina" : classN );
+								} else {
+									vimeo_player.overlay.removeClass( function( index, classNames ) {
+										// change the list into an array
+										var current_classes = classNames.split( " " ),
+											// array of classes which are to be removed
+											classes_to_remove = [];
+										jQuery.each( current_classes, function( index, class_name ) {
+											// if the classname begins with bg add it to the classes_to_remove array
+											if( /raster.*/.test( class_name ) ) {
+												classes_to_remove.push( class_name );
+											}
+										} );
+										classes_to_remove.push( "retina" );
+										// turn the array back into a string
+										return classes_to_remove.join( " " );
+									} )
+								}
+
+								vimeo_player.opt.stopAt = vimeo_player.opt.stopAt > data.duration ? data.duration - 0.6 : vimeo_player.opt.stopAt;
+								var end_time = vimeo_player.opt.stopAt || data.duration - 0.6;
+
+								if( data.seconds >= end_time ) {
+
+									vimeo_player.loop = vimeo_player.loop || 0;
+
+									if( vimeo_player.opt.loop && vimeo_player.loop < vimeo_player.opt.loop ) {
+										$vimeo_player.v_seekTo( vimeo_player.opt.startAt );
+										vimeo_player.loop++;
+
+									} else {
+										$vimeo_player.v_pause();
+										vimeo_player.state = 0;
+										$vimeo_player.trigger( "change_state" );
+									}
+								}
+
+								// Trigger state events
+								VEvent = jQuery.Event( 'VPTime' );
+								VEvent.time = data.seconds;
+								$vimeo_player.trigger( VEvent );
+
+							} );
 
 						} );
 
+						$vimeo_player.on( "change_state", function() {
+							//console.debug( "player state:: ", vimeo_player.state );
+
+							if( vimeo_player.state == 0 )
+								vimeo_player.wrapper.fadeOut( vimeo_player.opt.fadeTime, function() {
+									$vimeo_player.v_seekTo( 0 );
+								} );
+
+						} )
 					} );
-
-					$vimeo_player.on( "change_state", function() {
-						//console.debug( "player state:: ", vimeo_player.state );
-
-						if( vimeo_player.state == 0 )
-							vimeo_player.wrapper.fadeOut( vimeo_player.opt.fadeTime, function() {
-								$vimeo_player.v_seekTo( 0 );
-							} );
-
-					} )
-				} );
 			} )
 		},
 
@@ -547,8 +547,10 @@ var get_vimeo_videoID = function( url ) {
 
 			var vimeo_player = this.get( 0 );
 
-			console.debug( "setVolume:: ", val );
-			console.debug( "volume:: ", vimeo_player.opt.vol );
+			/*
+						console.debug( "setVolume:: ", val );
+						console.debug( "volume:: ", vimeo_player.opt.vol );
+			*/
 
 			if( !val && !vimeo_player.opt.vol && vimeo_player.isMute )
 				jQuery( vimeo_player ).v_unmute();
@@ -670,7 +672,7 @@ var get_vimeo_videoID = function( url ) {
 
 			var movieUrl = jQuery( "<span/>" ).html( jQuery.vimeo_player.controls.logo ).addClass( "vimeo_url vimeo_icon" ).attr( "title", "view on Vimeo" ).on( "click", function() {
 
-				console.debug( vURL );
+				//				console.debug( vURL );
 
 				window.open( vURL, "viewOnVimeo" )
 			} );
@@ -689,7 +691,7 @@ var get_vimeo_videoID = function( url ) {
 				var totalTime = Math.floor( vimeo_player.duration );
 				vimeo_player.goto = ( timeBar.outerWidth() * totalTime ) / progressBar.outerWidth();
 
-				console.debug( vimeo_player.goto );
+				//				console.debug( vimeo_player.goto );
 
 				jQuery( vimeo_player ).v_seekTo( parseFloat( vimeo_player.goto ) );
 				vimeo_player.controlBar.find( ".vimeo_player_loaded" ).css( {
