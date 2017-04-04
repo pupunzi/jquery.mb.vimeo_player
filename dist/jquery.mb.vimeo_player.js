@@ -37,10 +37,10 @@ var get_vimeo_videoID = function( url ) {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
 		version: "1.0.6",
-		build: "379",
+		build: "380",
 		defaults: {
 			containment: "body",
-			ratio: "16/9", // "16/9", "4/3" or
+			ratio: "16/9", // "16/9" or "4/3"
 			videoURL: null,
 			startAt: 0,
 			stopAt: 0,
@@ -300,7 +300,7 @@ var get_vimeo_videoID = function( url ) {
 							VEvent.data = data;
 							$vimeo_player.trigger( VEvent );
 
-							console.debug( "1. progress:: ", data );
+							//							console.debug( "1. progress:: ", data );
 
 						} );
 
@@ -366,8 +366,7 @@ var get_vimeo_videoID = function( url ) {
 						//TIME UPDATE
 						vimeo_player.player.on( "timeupdate", function( data ) {
 
-
-							console.debug( "2. timeupdate:: ", data );
+							//							console.debug( "2. timeupdate:: ", data );
 
 							vimeo_player.duration = data.duration;
 							vimeo_player.percent = data.percent;
@@ -547,8 +546,10 @@ var get_vimeo_videoID = function( url ) {
 
 			var vimeo_player = this.get( 0 );
 
-			console.debug( "setVolume:: ", val );
-			console.debug( "volume:: ", vimeo_player.opt.vol );
+			/*
+						console.debug( "setVolume:: ", val );
+						console.debug( "volume:: ", vimeo_player.opt.vol );
+			*/
 
 			if( !val && !vimeo_player.opt.vol && vimeo_player.isMute )
 				jQuery( vimeo_player ).v_unmute();
@@ -670,7 +671,7 @@ var get_vimeo_videoID = function( url ) {
 
 			var movieUrl = jQuery( "<span/>" ).html( jQuery.vimeo_player.controls.logo ).addClass( "vimeo_url vimeo_icon" ).attr( "title", "view on Vimeo" ).on( "click", function() {
 
-				console.debug( vURL );
+				//				console.debug( vURL );
 
 				window.open( vURL, "viewOnVimeo" )
 			} );
@@ -689,7 +690,7 @@ var get_vimeo_videoID = function( url ) {
 				var totalTime = Math.floor( vimeo_player.duration );
 				vimeo_player.goto = ( timeBar.outerWidth() * totalTime ) / progressBar.outerWidth();
 
-				console.debug( vimeo_player.goto );
+				//				console.debug( vimeo_player.goto );
 
 				jQuery( vimeo_player ).v_seekTo( parseFloat( vimeo_player.goto ) );
 				vimeo_player.controlBar.find( ".vimeo_player_loaded" ).css( {
