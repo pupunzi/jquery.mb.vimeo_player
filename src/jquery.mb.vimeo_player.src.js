@@ -248,11 +248,11 @@ var get_vimeo_videoID = function( url ) {
 
 						function start() {
 							vimeo_player.isReady = true;
-
-							if( vimeo_player.opt.mute )
+							if( vimeo_player.opt.mute ) {
 								setTimeout( function() {
 									$vimeo_player.v_mute();
-								}, 1000 );
+								}, 10 );
+							}
 
 							if( vimeo_player.opt.showControls )
 								jQuery.vimeo_player.buildControls( vimeo_player );
@@ -277,6 +277,7 @@ var get_vimeo_videoID = function( url ) {
 						}
 
 						if( vimeo_player.opt.startAt ) {
+
 
 							vimeo_player.player.play().then( function() {
 								vimeo_player.player.pause();

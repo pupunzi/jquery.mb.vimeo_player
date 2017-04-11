@@ -37,7 +37,7 @@ var get_vimeo_videoID = function( url ) {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
 		version: "1.0.6",
-		build: "381",
+		build: "390",
 		defaults: {
 			containment: "body",
 			ratio: "16/9", // "16/9" or "4/3"
@@ -248,11 +248,11 @@ var get_vimeo_videoID = function( url ) {
 
 						function start() {
 							vimeo_player.isReady = true;
-
-							if( vimeo_player.opt.mute )
+							if( vimeo_player.opt.mute ) {
 								setTimeout( function() {
 									$vimeo_player.v_mute();
-								}, 1000 );
+								}, 10 );
+							}
 
 							if( vimeo_player.opt.showControls )
 								jQuery.vimeo_player.buildControls( vimeo_player );
@@ -277,6 +277,7 @@ var get_vimeo_videoID = function( url ) {
 						}
 
 						if( vimeo_player.opt.startAt ) {
+
 
 							vimeo_player.player.play().then( function() {
 								vimeo_player.player.pause();
@@ -442,8 +443,8 @@ var get_vimeo_videoID = function( url ) {
 								} )
 							}
 
-							vimeo_player.opt.stopAt = vimeo_player.opt.stopAt > data.duration ? data.duration - 0.6 : vimeo_player.opt.stopAt;
-							var end_time = vimeo_player.opt.stopAt || data.duration - 0.6;
+							vimeo_player.opt.stopAt = vimeo_player.opt.stopAt > data.duration ? data.duration - 0.5 : vimeo_player.opt.stopAt;
+							var end_time = vimeo_player.opt.stopAt || data.duration - 0.5;
 
 							if( data.seconds >= end_time ) {
 
@@ -466,7 +467,6 @@ var get_vimeo_videoID = function( url ) {
 							$vimeo_player.trigger( VEvent );
 
 						} );
-
 					} );
 
 					$vimeo_player.on( "change_state", function() {
