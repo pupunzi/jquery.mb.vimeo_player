@@ -265,9 +265,9 @@ var get_vimeo_videoID = function( url ) {
 									setTimeout( function() {
 										VEvent = jQuery.Event( 'VPStart' );
 										$vimeo_player.trigger( VEvent );
-									}, 1500 )
+									}, vimeo_player.opt.fadeTime )
 
-								}, 100 );
+								}, 1 );
 							else
 								$vimeo_player.v_pause();
 
