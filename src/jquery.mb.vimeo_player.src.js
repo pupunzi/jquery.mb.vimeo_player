@@ -251,7 +251,7 @@ var get_vimeo_videoID = function( url ) {
 							if( vimeo_player.opt.mute ) {
 								setTimeout( function() {
 									$vimeo_player.v_mute();
-								}, 10 );
+								}, 1 );
 							}
 
 							if( vimeo_player.opt.showControls )

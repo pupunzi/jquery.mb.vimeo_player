@@ -37,7 +37,7 @@ var get_vimeo_videoID = function( url ) {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
 		version: "1.0.8",
-		build: "393",
+		build: "395",
 		defaults: {
 			containment: "body",
 			ratio: "16/9", // "16/9" or "4/3"
@@ -251,7 +251,7 @@ var get_vimeo_videoID = function( url ) {
 							if( vimeo_player.opt.mute ) {
 								setTimeout( function() {
 									$vimeo_player.v_mute();
-								}, 10 );
+								}, 1 );
 							}
 
 							if( vimeo_player.opt.showControls )
