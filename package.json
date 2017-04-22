@@ -11,7 +11,7 @@
     "player",
     "custom"
   ],
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)",
   "maintainers": [
     "Pupunzi <matteo@open-lab.com> (Matteo Bicocchi)"
@@ -50,5 +50,5 @@
   "directories": {
     "example": "examples"
   },
-  "buildnum": "395"
+  "buildnum": "404"
 }
