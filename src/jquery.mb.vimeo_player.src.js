@@ -193,7 +193,7 @@ var get_vimeo_videoID = function( url ) {
 					};
 
 					$vimeo_player.remove();
-					return;
+					// return;
 				}
 
 				vimeo_player.opt.containment.children().not( "script, style" ).each( function() {
