@@ -19,6 +19,11 @@
  _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
+/**
+ *
+ * @param url
+ * @returns {*}
+ */
 var get_vimeo_videoID = function( url ) {
 
 	var videoID;
@@ -28,9 +33,8 @@ var get_vimeo_videoID = function( url ) {
 		videoID = url.length > 15 ? null : url;
 	}
 
-	return videoID
+	return videoID;
 };
-
 
 ( function( $ ) {
 	jQuery.vimeo_player = {
@@ -62,9 +66,11 @@ var get_vimeo_videoID = function( url ) {
 			align: "center,center", // top,bottom,left,right
 			onReady: function( player ) {}
 		},
+
 		/**
 		 *  @fontface icons
-		 *  */
+		 *
+		 **/
 		controls: {
 			play: "P",
 			pause: "p",
@@ -85,7 +91,6 @@ var get_vimeo_videoID = function( url ) {
 				}
 				return isIfr;
 			};
-
 
 			var script = document.createElement( 'script' );
 			script.src = "//player.vimeo.com/api/player.js";
@@ -488,12 +493,21 @@ var get_vimeo_videoID = function( url ) {
 			} )
 		},
 
+		/**
+		 *
+		 * @param s
+		 * @returns {string}
+		 */
 		formatTime: function( s ) {
 			var min = Math.floor( s / 60 );
 			var sec = Math.floor( s - ( 60 * min ) );
 			return( min <= 9 ? "0" + min : min ) + " : " + ( sec <= 9 ? "0" + sec : sec );
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.vimeo_player}
+		 */
 		play: function() {
 			var vimeo_player = this.get( 0 );
 			if( !vimeo_player.isReady )
@@ -516,6 +530,11 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
+		/**
+		 *
+		 * @param callback
+		 * @returns {jQuery.vimeo_player}
+		 */
 		togglePlay: function( callback ) {
 			var vimeo_player = this.get( 0 );
 			if( vimeo_player.state == 1 )
@@ -529,6 +548,10 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.vimeo_player}
+		 */
 		pause: function() {
 			var vimeo_player = this.get( 0 );
 			vimeo_player.player.pause();
@@ -536,6 +559,12 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
+		/**
+		 *
+		 * @param val
+		 * @param callback
+		 * @returns {jQuery.vimeo_player}
+		 */
 		seekTo: function( val, callback ) {
 			var vimeo_player = this.get( 0 );
 
@@ -548,6 +577,11 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
+		/**
+		 *
+		 * @param val
+		 * @returns {jQuery.vimeo_player}
+		 */
 		setVolume: function( val ) {
 
 			var vimeo_player = this.get( 0 );
@@ -574,6 +608,10 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
+		/**
+		 *
+		 * @returns {boolean}
+		 */
 		toggleVolume: function() {
 			var vimeo_player = this.get( 0 );
 			if( !vimeo_player ) return;
@@ -587,6 +625,10 @@ var get_vimeo_videoID = function( url ) {
 			}
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.vimeo_player}
+		 */
 		mute: function() {
 			var vimeo_player = this.get( 0 );
 			if( vimeo_player.isMute )
@@ -608,11 +650,16 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
+		/**
+		 *
+		 * @returns {jQuery.vimeo_player}
+		 */
 		unmute: function() {
 			var vimeo_player = this.get( 0 );
 
 			if( !vimeo_player.isMute )
 				return;
+
 			vimeo_player.isMute = false;
 
 			jQuery( vimeo_player ).v_set_volume( vimeo_player.opt.vol );
@@ -628,6 +675,10 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
+		/**
+		 *
+		 * @param obj
+		 */
 		changeMovie: function( obj ) {
 
 			var vimeo_player = this.get( 0 );
@@ -635,11 +686,13 @@ var get_vimeo_videoID = function( url ) {
 
 				jQuery( vimeo_player ).v_setState();
 
-
 			} )
 		},
 
-
+		/**
+		 *
+		 * @param vimeo_player
+		 */
 		buildControls: function( vimeo_player ) {
 			var data = vimeo_player.opt;
 
@@ -676,9 +729,6 @@ var get_vimeo_videoID = function( url ) {
 			var vURL = "https://vimeo.com/" + vimeo_player.videoID;
 
 			var movieUrl = jQuery( "<span/>" ).html( jQuery.vimeo_player.controls.logo ).addClass( "vimeo_url vimeo_icon" ).attr( "title", "view on Vimeo" ).on( "click", function() {
-
-				//				console.debug( vURL );
-
 				window.open( vURL, "viewOnVimeo" )
 			} );
 
@@ -737,6 +787,10 @@ var get_vimeo_videoID = function( url ) {
 			} );
 		},
 
+		/**
+		 *
+		 * @param align
+		 */
 		optimizeVimeoDisplay: function( align ) {
 
 			var vimeo_player = this.get( 0 );
@@ -850,7 +904,11 @@ var get_vimeo_videoID = function( url ) {
 			return vimeo_player.opt.align;
 		},
 
-
+		/**
+		 *
+		 * @param real
+		 * @returns {jQuery.vimeo_player}
+		 */
 		fullscreen: function( real ) {
 			var vimeo_player = this.get( 0 );
 			var $vimeo_player = jQuery( vimeo_player );
