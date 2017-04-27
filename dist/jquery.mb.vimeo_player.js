@@ -892,7 +892,6 @@ var get_vimeo_videoID = function( url ) {
 		 */
 		setAlign: function( align ) {
 			var $vimeo_player = this;
-
 			$vimeo_player.v_optimize_display( align );
 		},
 		/**
