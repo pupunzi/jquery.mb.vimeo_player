@@ -230,7 +230,6 @@ toggle actual mask on and off.
 For example:
 <pre><code><button onclick="jQuery('#[playerID]').v_toggleMask()">Toggle Mask</button></code></pre>
 
-
 You can also use those method within the "YTPTime" event trigger to display a specific mask at a specific time during the video play.
 For example:
 <pre><code>
