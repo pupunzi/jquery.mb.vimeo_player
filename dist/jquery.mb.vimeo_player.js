@@ -19,11 +19,6 @@
  _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
-/**
- *
- * @param url
- * @returns {*}
- */
 var get_vimeo_videoID = function( url ) {
 
 	var videoID;
@@ -33,15 +28,16 @@ var get_vimeo_videoID = function( url ) {
 		videoID = url.length > 15 ? null : url;
 	}
 
-	return videoID;
+	return videoID
 };
+
 
 ( function( $ ) {
 	jQuery.vimeo_player = {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
-		version: "1.0.9",
-		build: "404",
+		version: "1.0.10",
+		build: "407",
 		defaults: {
 			containment: "body",
 			ratio: "16/9", // "16/9" or "4/3"
@@ -66,11 +62,9 @@ var get_vimeo_videoID = function( url ) {
 			align: "center,center", // top,bottom,left,right
 			onReady: function( player ) {}
 		},
-
 		/**
 		 *  @fontface icons
-		 *
-		 **/
+		 *  */
 		controls: {
 			play: "P",
 			pause: "p",
@@ -91,6 +85,7 @@ var get_vimeo_videoID = function( url ) {
 				}
 				return isIfr;
 			};
+
 
 			var script = document.createElement( 'script' );
 			script.src = "//player.vimeo.com/api/player.js";
@@ -493,21 +488,12 @@ var get_vimeo_videoID = function( url ) {
 			} )
 		},
 
-		/**
-		 *
-		 * @param s
-		 * @returns {string}
-		 */
 		formatTime: function( s ) {
 			var min = Math.floor( s / 60 );
 			var sec = Math.floor( s - ( 60 * min ) );
 			return( min <= 9 ? "0" + min : min ) + " : " + ( sec <= 9 ? "0" + sec : sec );
 		},
 
-		/**
-		 *
-		 * @returns {jQuery.vimeo_player}
-		 */
 		play: function() {
 			var vimeo_player = this.get( 0 );
 			if( !vimeo_player.isReady )
@@ -530,11 +516,6 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
-		/**
-		 *
-		 * @param callback
-		 * @returns {jQuery.vimeo_player}
-		 */
 		togglePlay: function( callback ) {
 			var vimeo_player = this.get( 0 );
 			if( vimeo_player.state == 1 )
@@ -548,10 +529,6 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
-		/**
-		 *
-		 * @returns {jQuery.vimeo_player}
-		 */
 		pause: function() {
 			var vimeo_player = this.get( 0 );
 			vimeo_player.player.pause();
@@ -559,12 +536,6 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
-		/**
-		 *
-		 * @param val
-		 * @param callback
-		 * @returns {jQuery.vimeo_player}
-		 */
 		seekTo: function( val, callback ) {
 			var vimeo_player = this.get( 0 );
 
@@ -577,11 +548,6 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
-		/**
-		 *
-		 * @param val
-		 * @returns {jQuery.vimeo_player}
-		 */
 		setVolume: function( val ) {
 
 			var vimeo_player = this.get( 0 );
@@ -608,10 +574,6 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
-		/**
-		 *
-		 * @returns {boolean}
-		 */
 		toggleVolume: function() {
 			var vimeo_player = this.get( 0 );
 			if( !vimeo_player ) return;
@@ -625,10 +587,6 @@ var get_vimeo_videoID = function( url ) {
 			}
 		},
 
-		/**
-		 *
-		 * @returns {jQuery.vimeo_player}
-		 */
 		mute: function() {
 			var vimeo_player = this.get( 0 );
 			if( vimeo_player.isMute )
@@ -650,16 +608,11 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
-		/**
-		 *
-		 * @returns {jQuery.vimeo_player}
-		 */
 		unmute: function() {
 			var vimeo_player = this.get( 0 );
 
 			if( !vimeo_player.isMute )
 				return;
-
 			vimeo_player.isMute = false;
 
 			jQuery( vimeo_player ).v_set_volume( vimeo_player.opt.vol );
@@ -675,10 +628,6 @@ var get_vimeo_videoID = function( url ) {
 			return this;
 		},
 
-		/**
-		 *
-		 * @param obj
-		 */
 		changeMovie: function( obj ) {
 
 			var vimeo_player = this.get( 0 );
@@ -686,13 +635,11 @@ var get_vimeo_videoID = function( url ) {
 
 				jQuery( vimeo_player ).v_setState();
 
+
 			} )
 		},
 
-		/**
-		 *
-		 * @param vimeo_player
-		 */
+
 		buildControls: function( vimeo_player ) {
 			var data = vimeo_player.opt;
 
@@ -729,6 +676,9 @@ var get_vimeo_videoID = function( url ) {
 			var vURL = "https://vimeo.com/" + vimeo_player.videoID;
 
 			var movieUrl = jQuery( "<span/>" ).html( jQuery.vimeo_player.controls.logo ).addClass( "vimeo_url vimeo_icon" ).attr( "title", "view on Vimeo" ).on( "click", function() {
+
+				//				console.debug( vURL );
+
 				window.open( vURL, "viewOnVimeo" )
 			} );
 
@@ -787,10 +737,6 @@ var get_vimeo_videoID = function( url ) {
 			} );
 		},
 
-		/**
-		 *
-		 * @param align
-		 */
 		optimizeVimeoDisplay: function( align ) {
 
 			var vimeo_player = this.get( 0 );
@@ -892,6 +838,7 @@ var get_vimeo_videoID = function( url ) {
 		 */
 		setAlign: function( align ) {
 			var $vimeo_player = this;
+
 			$vimeo_player.v_optimize_display( align );
 		},
 		/**
@@ -903,11 +850,7 @@ var get_vimeo_videoID = function( url ) {
 			return vimeo_player.opt.align;
 		},
 
-		/**
-		 *
-		 * @param real
-		 * @returns {jQuery.vimeo_player}
-		 */
+
 		fullscreen: function( real ) {
 			var vimeo_player = this.get( 0 );
 			var $vimeo_player = jQuery( vimeo_player );
@@ -1053,37 +996,18 @@ var get_vimeo_videoID = function( url ) {
 	jQuery.fn.v_toggle_volume = jQuery.vimeo_player.toggleVolume;
 
 } )( jQuery );
-;/*___________________________________________________________________________________________________________________________________________________
- _ jquery.mb.components                                                                                                                             _
- _                                                                                                                                                  _
- _ file: jquery.mb.browser.min.js                                                                                                                   _
- _ last modified: 07/06/16 22.34                                                                                                                    _
- _                                                                                                                                                  _
- _ Open Lab s.r.l., Florence - Italy                                                                                                                _
- _                                                                                                                                                  _
- _ email: matteo@open-lab.com                                                                                                                       _
- _ site: http://pupunzi.com                                                                                                                         _
- _       http://open-lab.com                                                                                                                        _
- _ blog: http://pupunzi.open-lab.com                                                                                                                _
- _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
- _                                                                                                                                                  _
- _ Licences: MIT, GPL                                                                                                                               _
- _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
- _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
- _                                                                                                                                                  _
- _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
- ___________________________________________________________________________________________________________________________________________________*/
-
-var nAgt=navigator.userAgent;
-if(!jQuery.browser){var isTouchSupported=function(){var a=nAgt.msMaxTouchPoints,b="ontouchstart"in document.createElement("div");return a||b?!0:!1};jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;jQuery.browser.hasTouch=isTouchSupported();jQuery.browser.ua=nAgt;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+
-		parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+
-		4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie=!0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Edge"))?(jQuery.browser.edge=!0,jQuery.browser.name="Microsoft Edge",jQuery.browser.fullVersion=
-		nAgt.substring(verOffset+5)):-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+
-		7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=
-		nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&
-(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion}
-jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;
-jQuery.isMobile=jQuery.browser.mobile;jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt);
+;var nAgt=navigator.userAgent;
+if(!jQuery.browser){var isTouchSupported=function(){var a=nAgt.msMaxTouchPoints,e="ontouchstart"in document.createElement("div");return a||e?!0:!1};jQuery.browser={};jQuery.browser.mozilla=!1;jQuery.browser.webkit=!1;jQuery.browser.opera=!1;jQuery.browser.safari=!1;jQuery.browser.chrome=!1;jQuery.browser.androidStock=!1;jQuery.browser.msie=!1;jQuery.browser.edge=!1;var getOS=function(){var a={name:"Unknown OS"};-1!=navigator.appVersion.indexOf("Win")&&(a.name="Windows");-1!=navigator.appVersion.indexOf("Mac")&&
+(a.name="Mac");-1!=navigator.appVersion.indexOf("Linux")&&(a.name="Linux");a.version="Unknown version";/Mac OS X/.test(nAgt)&&(a.version=/Mac OS X (10[\.\_\d]+)/.exec(nAgt)[1],a.version=a.version.replace(/_/g,".").substring(0,5));/Windows NT 5.1/.test(nAgt)&&(a.version="5.1");/Windows NT 6.0/.test(nAgt)&&(a.version="6.0");/Windows NT 6.1/.test(nAgt)&&(a.version="6.1");/Windows NT 6.2/.test(nAgt)&&(a.version="6.2");/Windows NT 10.0/.test(nAgt)&&(a.version="10.0");/Linux/.test(nAgt)&&/Linux/.test(nAgt)&&
+(a.version="Unknown.Unknown");a.name=a.name.toLowerCase();a.major_version=parseFloat(a.version.split(".")[0]);a.minor_version=parseFloat(a.version.split(".")[1]);return a};jQuery.browser.os=getOS();jQuery.browser.hasTouch=isTouchSupported();jQuery.browser.ua=nAgt;jQuery.browser.name=navigator.appName;jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion);jQuery.browser.majorVersion=parseInt(navigator.appVersion,10);var nameOffset,verOffset,ix;if(-1!=(verOffset=nAgt.indexOf("Opera")))jQuery.browser.opera=
+		!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+6),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8));else if(-1!=(verOffset=nAgt.indexOf("OPR")))jQuery.browser.opera=!0,jQuery.browser.name="Opera",jQuery.browser.fullVersion=nAgt.substring(verOffset+4);else if(-1!=(verOffset=nAgt.indexOf("MSIE")))jQuery.browser.msie=!0,jQuery.browser.name="Microsoft Internet Explorer",jQuery.browser.fullVersion=nAgt.substring(verOffset+
+		5);else if(-1!=nAgt.indexOf("Trident")){jQuery.browser.msie=!0;jQuery.browser.name="Microsoft Internet Explorer";var start=nAgt.indexOf("rv:")+3,end=start+4;jQuery.browser.fullVersion=nAgt.substring(start,end)}else-1!=(verOffset=nAgt.indexOf("Edge"))?(jQuery.browser.edge=!0,jQuery.browser.name="Microsoft Edge",jQuery.browser.fullVersion=nAgt.substring(verOffset+5)):-1!=(verOffset=nAgt.indexOf("Chrome"))?(jQuery.browser.webkit=!0,jQuery.browser.chrome=!0,jQuery.browser.name="Chrome",jQuery.browser.fullVersion=
+		nAgt.substring(verOffset+7)):-1<nAgt.indexOf("mozilla/5.0")&&-1<nAgt.indexOf("android ")&&-1<nAgt.indexOf("applewebkit")&&!(-1<nAgt.indexOf("chrome"))?(verOffset=nAgt.indexOf("Chrome"),jQuery.browser.webkit=!0,jQuery.browser.androidStock=!0,jQuery.browser.name="androidStock",jQuery.browser.fullVersion=nAgt.substring(verOffset+7)):-1!=(verOffset=nAgt.indexOf("Safari"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+
+		7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("AppleWebkit"))?(jQuery.browser.webkit=!0,jQuery.browser.safari=!0,jQuery.browser.name="Safari",jQuery.browser.fullVersion=nAgt.substring(verOffset+7),-1!=(verOffset=nAgt.indexOf("Version"))&&(jQuery.browser.fullVersion=nAgt.substring(verOffset+8))):-1!=(verOffset=nAgt.indexOf("Firefox"))?(jQuery.browser.mozilla=!0,jQuery.browser.name="Firefox",jQuery.browser.fullVersion=
+		nAgt.substring(verOffset+8)):(nameOffset=nAgt.lastIndexOf(" ")+1)<(verOffset=nAgt.lastIndexOf("/"))&&(jQuery.browser.name=nAgt.substring(nameOffset,verOffset),jQuery.browser.fullVersion=nAgt.substring(verOffset+1),jQuery.browser.name.toLowerCase()==jQuery.browser.name.toUpperCase()&&(jQuery.browser.name=navigator.appName));-1!=(ix=jQuery.browser.fullVersion.indexOf(";"))&&(jQuery.browser.fullVersion=jQuery.browser.fullVersion.substring(0,ix));-1!=(ix=jQuery.browser.fullVersion.indexOf(" "))&&(jQuery.browser.fullVersion=
+		jQuery.browser.fullVersion.substring(0,ix));jQuery.browser.majorVersion=parseInt(""+jQuery.browser.fullVersion,10);isNaN(jQuery.browser.majorVersion)&&(jQuery.browser.fullVersion=""+parseFloat(navigator.appVersion),jQuery.browser.majorVersion=parseInt(navigator.appVersion,10));jQuery.browser.version=jQuery.browser.majorVersion;jQuery.browser.android=/Android/i.test(nAgt);jQuery.browser.blackberry=/BlackBerry|BB|PlayBook/i.test(nAgt);jQuery.browser.ios=/iPhone|iPad|iPod|webOS/i.test(nAgt);jQuery.browser.operaMobile=
+		/Opera Mini/i.test(nAgt);jQuery.browser.windowsMobile=/IEMobile|Windows Phone/i.test(nAgt);jQuery.browser.kindle=/Kindle|Silk/i.test(nAgt);jQuery.browser.mobile=jQuery.browser.android||jQuery.browser.blackberry||jQuery.browser.ios||jQuery.browser.windowsMobile||jQuery.browser.operaMobile||jQuery.browser.kindle;jQuery.isMobile=jQuery.browser.mobile;jQuery.isTablet=jQuery.browser.mobile&&765<jQuery(window).width();jQuery.isAndroidDefault=jQuery.browser.android&&!/chrome/i.test(nAgt)}
+jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e)return!1;for(var c=a.split("."),d=e.split("."),b=0,f=Math.max(c.length,d.length);b<f;b++){if(c[b]&&!d[b]&&0<parseInt(c[b])||parseInt(c[b])>parseInt(d[b]))return 1;if(d[b]&&!c[b]&&0<parseInt(d[b])||parseInt(c[b])<parseInt(d[b]))return-1}return 0};
 ;/*___________________________________________________________________________________________________________________________________________________
  _ jquery.mb.components                                                                                                                             _
  _                                                                                                                                                  _
