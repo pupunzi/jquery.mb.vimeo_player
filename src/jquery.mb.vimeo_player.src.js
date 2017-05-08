@@ -260,20 +260,22 @@ var get_vimeo_videoID = function( url ) {
 								}, 1 );
 							}
 
-							if( vimeo_player.opt.autoPlay ) {
-								$vimeo_player.v_play();
-
-								setTimeout(function () {
-									VEvent = jQuery.Event('VPStart');
-									$vimeo_player.trigger(VEvent);
-								}, vimeo_player.opt.fadeTime)
-							}
-							else
-								$vimeo_player.v_pause();
-
 							if( vimeo_player.opt.showControls )
 								jQuery.vimeo_player.buildControls( vimeo_player );
 
+							if( vimeo_player.opt.autoPlay )
+								setTimeout( function() {
+
+									$vimeo_player.v_play();
+
+									setTimeout( function() {
+										VEvent = jQuery.Event( 'VPStart' );
+										$vimeo_player.trigger( VEvent );
+									}, vimeo_player.opt.fadeTime )
+
+								}, 1 );
+							else
+								$vimeo_player.v_pause();
 
 							VEvent = jQuery.Event( 'VPReady' );
 							$vimeo_player.trigger( VEvent );
@@ -433,8 +435,8 @@ var get_vimeo_videoID = function( url ) {
 								vimeo_player.overlay.removeClass( function( index, classNames ) {
 									// change the list into an array
 									var current_classes = classNames.split( " " ),
-									// array of classes which are to be removed
-											classes_to_remove = [];
+										// array of classes which are to be removed
+										classes_to_remove = [];
 									jQuery.each( current_classes, function( index, class_name ) {
 										// if the classname begins with bg add it to the classes_to_remove array
 										if( /raster.*/.test( class_name ) ) {
@@ -551,9 +553,9 @@ var get_vimeo_videoID = function( url ) {
 			var vimeo_player = this.get( 0 );
 
 			/*
-			 console.debug( "setVolume:: ", val );
-			 console.debug( "volume:: ", vimeo_player.opt.vol );
-			 */
+						console.debug( "setVolume:: ", val );
+						console.debug( "volume:: ", vimeo_player.opt.vol );
+			*/
 
 			if( !val && !vimeo_player.opt.vol && vimeo_player.isMute )
 				jQuery( vimeo_player ).v_unmute();
@@ -947,7 +949,7 @@ var get_vimeo_videoID = function( url ) {
 			function RunPrefixMethod( obj, method ) {
 				var pfx = [ "webkit", "moz", "ms", "o", "" ];
 				var p = 0,
-						m, t;
+					m, t;
 				while( p < pfx.length && !obj[ m ] ) {
 					m = method;
 					if( pfx[ p ] == "" ) {
