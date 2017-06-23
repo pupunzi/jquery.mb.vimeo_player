@@ -167,7 +167,10 @@
             /**
              * Initialize the Vimeo Player with a fallback image for mobile
              */
-            myPlayer = jQuery("#bgndVideo").vimeo_player({mobileFallbackImage:"https://camo.githubusercontent.com/7316ea8523a142146ee0073fabf74589bc485269/68747470733a2f2f707570756e7a692e636f6d2f6d622e636f6d706f6e656e74732f6d622e76696d656f5f706c617965722f76696d656f506c617965722e6a7067"});
+            myPlayer = jQuery("#bgndVideo").vimeo_player({
+                mobileFallbackImage:"https://camo.githubusercontent.com/7316ea8523a142146ee0073fabf74589bc485269/68747470733a2f2f707570756e7a692e636f6d2f6d622e636f6d706f6e656e74732f6d622e76696d656f5f706c617965722f76696d656f506c617965722e6a7067",
+                onReady: function(player){}
+            });
 
             /**
              * Bind custom events
@@ -179,12 +182,25 @@
                  */
                 $("#time").html(Math.floor(e.time) + " sec.");
 
-            }).on("VPStart VPFallback", function(){
+            }).on("VPStart VPFallback", function(e){
                 /**
                  * VPStart:
                  * Hide the loader once the player start
                  */
+
+                console.debug(e);
+
                 $("#loader").fadeOut(1000);
+
+            }).on("VPReady", function(e){
+
+                console.debug(e);
+                setTimeout(function(){
+                    myPlayer.v_play();
+                }, 1000);
+
+                if(!e.opt.autoPlay)
+                    $("#loader").hide();
 
             });
         });

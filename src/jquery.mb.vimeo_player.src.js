@@ -273,13 +273,17 @@ var get_vimeo_videoID = function( url ) {
 										$vimeo_player.trigger( VEvent );
 									}, vimeo_player.opt.fadeTime )
 
-								}, 1 );
+								}, 100 );
+
 							else
 								$vimeo_player.v_pause();
 
 							VEvent = jQuery.Event( 'VPReady' );
+							VEvent.opt = vimeo_player.opt;
 							$vimeo_player.trigger( VEvent );
 
+							if( typeof vimeo_player.opt.onReady == "function" )
+								vimeo_player.opt.onReady( vimeo_player )
 						}
 
 						if( vimeo_player.opt.startAt ) {
