@@ -167,7 +167,7 @@
             /**
              * Initialize the Vimeo Player with a fallback image for mobile
              */
-            myPlayer = jQuery("#bgndVideo").vimeo_player({
+            myPlayer = jQuery(".player").vimeo_player({
                 mobileFallbackImage:"https://camo.githubusercontent.com/7316ea8523a142146ee0073fabf74589bc485269/68747470733a2f2f707570756e7a692e636f6d2f6d622e636f6d706f6e656e74732f6d622e76696d656f5f706c617965722f76696d656f506c617965722e6a7067",
                 onReady: function(player){}
             });
@@ -188,17 +188,19 @@
                  * Hide the loader once the player start
                  */
 
-                console.debug(e);
+                //console.debug(e);
 
                 $("#loader").fadeOut(1000);
 
             }).on("VPReady", function(e){
 
+/*
                 console.debug(e);
                 setTimeout(function(){
                     myPlayer.v_play();
                 }, 1000);
 
+*/
                 if(!e.opt.autoPlay)
                     $("#loader").hide();
 
@@ -237,8 +239,10 @@
     <a style="position: fixed;bottom:40px;right: 30px;" href="http://pupunzi.open-lab.com/consider-a-donation/" target="_blank">
         <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
     </a>
-    <!--https://vimeo.com/14352658, 82820412, 16917950, 56810854, 35396305, 12199910-->
-    <a id="bgndVideo" class="player" data-property="{videoURL:'12199910',containment:'body', showControls:true, fadeTime:1000, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:215, opacity:1, addRaster:false}">My video</a>
+    <!--https://vimeo.com/14352658, 82820412, 16917950, 56810854, 35396305, 12199910 https://vimeo.com/202763350-->
+
+
+    <a id="bgndVideo" class="player" data-property="{videoURL:'https://vimeo.com/202763350',containment:'body', showControls:true, fadeTime:1000, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:215, opacity:1, addRaster:false}">My video</a>
 
 </div>
 

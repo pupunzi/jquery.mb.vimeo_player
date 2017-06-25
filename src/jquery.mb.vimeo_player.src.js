@@ -264,16 +264,17 @@ var get_vimeo_videoID = function( url ) {
 								jQuery.vimeo_player.buildControls( vimeo_player );
 
 							if( vimeo_player.opt.autoPlay )
+							//								setTimeout( function() {
+
+							//									$vimeo_player.v_play();
+
 								setTimeout( function() {
+								$vimeo_player.v_play();
+								VEvent = jQuery.Event( 'VPStart' );
+								$vimeo_player.trigger( VEvent );
+							}, vimeo_player.opt.fadeTime )
 
-									$vimeo_player.v_play();
-
-									setTimeout( function() {
-										VEvent = jQuery.Event( 'VPStart' );
-										$vimeo_player.trigger( VEvent );
-									}, vimeo_player.opt.fadeTime )
-
-								}, 100 );
+							//								}, 100 );
 
 							else
 								$vimeo_player.v_pause();
@@ -310,8 +311,6 @@ var get_vimeo_videoID = function( url ) {
 							VEvent = jQuery.Event( 'VPProgress' );
 							VEvent.data = data;
 							$vimeo_player.trigger( VEvent );
-
-							//							console.debug( "1. progress:: ", data );
 
 						} );
 
