@@ -840,7 +840,7 @@ var get_vimeo_videoID = function( url ) {
 
 				} );
 
-			}, 1 )
+			}, 100 )
 		},
 
 		/**
