@@ -37,7 +37,7 @@ var get_vimeo_videoID = function( url ) {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
 		version: "1.0.2",
-		build: "425",
+		build: "442",
 		defaults: {
 			containment: "body",
 			ratio: "16/9", // "16/9" or "4/3"
@@ -108,7 +108,7 @@ var get_vimeo_videoID = function( url ) {
 
 				jQuery.extend( vimeo_player.opt, jQuery.vimeo_player.defaults, options, property );
 
-				vimeo_player.opt.ratio = vimeo_player.opt.ratio == "auto" ? "16/9" : vimeo_player.opt.ratio;
+				//				vimeo_player.opt.ratio = vimeo_player.opt.ratio == "auto" ? "16/9" : vimeo_player.opt.ratio;
 
 				if( eval( vimeo_player.opt.loop ) )
 					vimeo_player.opt.loop = 9999;
@@ -224,8 +224,7 @@ var get_vimeo_videoID = function( url ) {
 						position: "relative"
 					} );
 
-				vimeo_player.wrapper = wrapper;
-
+				vimeo_player.videoWrapper = wrapper;
 				vimeo_player.playerBox.css( {
 					opacity: 1
 				} );
@@ -264,17 +263,12 @@ var get_vimeo_videoID = function( url ) {
 								jQuery.vimeo_player.buildControls( vimeo_player );
 
 							if( vimeo_player.opt.autoPlay )
-								//								setTimeout( function() {
-
-								//									$vimeo_player.v_play();
 
 								setTimeout( function() {
 									$vimeo_player.v_play();
 									VEvent = jQuery.Event( 'VPStart' );
 									$vimeo_player.trigger( VEvent );
 								}, vimeo_player.opt.fadeTime )
-
-							//								}, 100 );
 
 							else
 								$vimeo_player.v_pause();
@@ -285,6 +279,9 @@ var get_vimeo_videoID = function( url ) {
 
 							if( typeof vimeo_player.opt.onReady == "function" )
 								vimeo_player.opt.onReady( vimeo_player )
+
+							$vimeo_player.v_optimize_display();
+
 						}
 
 						if( vimeo_player.opt.startAt ) {
@@ -301,7 +298,6 @@ var get_vimeo_videoID = function( url ) {
 						} else
 							start();
 
-						$vimeo_player.v_optimize_display();
 						jQuery( window ).off( "resize.vimeo_player_" + vimeo_player.id ).on( "resize.vimeo_player_" + vimeo_player.id, function() {
 							$vimeo_player.v_optimize_display();
 						} );
@@ -482,7 +478,7 @@ var get_vimeo_videoID = function( url ) {
 						//console.debug( "player state:: ", vimeo_player.state );
 
 						if( vimeo_player.state == 0 )
-							vimeo_player.wrapper.fadeOut( vimeo_player.opt.fadeTime, function() {
+							vimeo_player.videoWrapper.fadeOut( vimeo_player.opt.fadeTime, function() {
 								$vimeo_player.v_seekTo( 0 );
 							} );
 
@@ -504,7 +500,7 @@ var get_vimeo_videoID = function( url ) {
 
 			vimeo_player.player.play();
 			setTimeout( function() {
-				vimeo_player.wrapper.fadeTo( vimeo_player.opt.fadeTime, vimeo_player.opt.opacity );
+				vimeo_player.videoWrapper.fadeTo( vimeo_player.opt.fadeTime, vimeo_player.opt.opacity );
 			}, 1000 );
 
 			var controls = jQuery( "#controlBar_" + vimeo_player.id );
@@ -556,9 +552,9 @@ var get_vimeo_videoID = function( url ) {
 			var vimeo_player = this.get( 0 );
 
 			/*
-						console.debug( "setVolume:: ", val );
-						console.debug( "volume:: ", vimeo_player.opt.vol );
-			*/
+			 console.debug( "setVolume:: ", val );
+			 console.debug( "volume:: ", vimeo_player.opt.vol );
+			 */
 
 			if( !val && !vimeo_player.opt.vol && vimeo_player.isMute )
 				jQuery( vimeo_player ).v_unmute();
@@ -717,7 +713,7 @@ var get_vimeo_videoID = function( url ) {
 			vimeo_player.controlBar.append( buttonBar ).append( progressBar );
 			if( !vimeo_player.isBackground ) {
 				//vimeo_player.controlBar.addClass( "inline_vimeo_player" );
-				vimeo_player.wrapper.before( vimeo_player.controlBar );
+				vimeo_player.videoWrapper.before( vimeo_player.controlBar );
 			} else {
 				jQuery( "body" ).after( vimeo_player.controlBar );
 			}
@@ -745,47 +741,57 @@ var get_vimeo_videoID = function( url ) {
 			var vimeo_player = this.get( 0 );
 			var vid = {};
 
+
 			vimeo_player.opt.align = align || vimeo_player.opt.align;
 
 			vimeo_player.opt.align = typeof vimeo_player.opt.align != "undefined " ? vimeo_player.opt.align : "center,center";
-			var YTPAlign = vimeo_player.opt.align.split( "," );
+			var VimeoAlign = vimeo_player.opt.align.split( "," );
+
 
 			if( vimeo_player.opt.optimizeDisplay ) {
 				var abundance = vimeo_player.isPlayer ? 0 : 80;
 				var win = {};
-				var el = vimeo_player.wrapper;
+				var el = vimeo_player.videoWrapper;
 
 				win.width = el.outerWidth();
 				win.height = el.outerHeight() + abundance;
 
+				vimeo_player.opt.ratio = eval( vimeo_player.opt.ratio );
+
 				vid.width = win.width;
-
-				vimeo_player.opt.ratio = eval( vimeo_player.opt.ratio )
-
-				//vid.height = vimeo_player.opt.ratio == "16/9" ? Math.ceil( vid.width * ( 9 / 16 ) ) : Math.ceil( vid.width * ( 3 / 4 ) );
 				vid.height = Math.ceil( vid.width / vimeo_player.opt.ratio );
 
-				vid.marginTop = -( ( vid.height - win.height ) / 2 );
+				vid.marginTop = Math.ceil( -( ( vid.height - win.height ) / 2 ) );
 				vid.marginLeft = 0;
+
+				vimeo_player.playerBox.css( {
+					top: 0,
+					opacity: 0,
+					width: 100,
+					height: Math.ceil( 100 / vimeo_player.opt.ratio ),
+					marginTop: 0,
+					marginLeft: 0,
+					frameBorder: 0
+				} );
+
 
 				var lowest = vid.height < win.height;
 
 				if( lowest ) {
 
-					vid.height = win.height + abundance;
-					//vid.width = vimeo_player.opt.ratio == "16/9" ? Math.floor( vid.height * ( 16 / 9 ) ) : Math.floor( vid.height * ( 4 / 3 ) );
+					vid.height = win.height;
 					vid.width = Math.ceil( vid.height * vimeo_player.opt.ratio );
 
 					vid.marginTop = 0;
-					vid.marginLeft = -( ( vid.width - win.width ) / 2 );
+					vid.marginLeft = Math.ceil( -( ( vid.width - win.width ) / 2 ) );
 
 				}
 
-				for( var a in YTPAlign ) {
+				for( var a in VimeoAlign ) {
 
-					if( YTPAlign.hasOwnProperty( a ) ) {
+					if( VimeoAlign.hasOwnProperty( a ) ) {
 
-						var al = YTPAlign[ a ].replace( / /g, "" );
+						var al = VimeoAlign[ a ].replace( / /g, "" );
 
 						switch( al ) {
 
@@ -823,16 +829,18 @@ var get_vimeo_videoID = function( url ) {
 
 			}
 
-			vimeo_player.playerBox.css( {
+			setTimeout( function() {
+				vimeo_player.playerBox.css( {
+					opacity: 1,
+					width: vid.width,
+					height: vid.height,
+					marginTop: vid.marginTop,
+					marginLeft: vid.marginLeft,
+					maxWidth: "initial"
 
-				width: vid.width,
-				height: vid.height,
-				marginTop: vid.marginTop,
-				marginLeft: vid.marginLeft,
-				maxWidth: "initial"
+				} );
 
-			} );
-
+			}, 1 )
 		},
 
 		/**
@@ -863,7 +871,7 @@ var get_vimeo_videoID = function( url ) {
 			real = eval( real );
 			var controls = jQuery( "#controlBar_" + vimeo_player.id );
 			var fullScreenBtn = controls.find( ".vimeo_fullscreen" );
-			var videoWrapper = vimeo_player.isSelf ? vimeo_player.opt.containment : vimeo_player.wrapper;
+			var videoWrapper = vimeo_player.isSelf ? vimeo_player.opt.containment : vimeo_player.videoWrapper;
 
 			if( real ) {
 				var fullscreenchange = jQuery.browser.mozilla ? "mozfullscreenchange" : jQuery.browser.webkit ? "webkitfullscreenchange" : "fullscreenchange";
@@ -883,7 +891,7 @@ var get_vimeo_videoID = function( url ) {
 						if( vimeo_player.isBackground ) {
 							jQuery( "body" ).after( controls );
 						} else {
-							vimeo_player.wrapper.before( controls );
+							vimeo_player.videoWrapper.before( controls );
 						}
 						jQuery( window ).resize();
 						// Trigger state events
@@ -923,7 +931,7 @@ var get_vimeo_videoID = function( url ) {
 					launchFullscreen( videoWrapper.get( 0 ) );
 					setTimeout( function() {
 						videoWrapper.fadeTo( vimeo_player.opt.fadeTime, 1 );
-						vimeo_player.wrapper.append( controls );
+						vimeo_player.videoWrapper.append( controls );
 						jQuery( vimeo_player ).v_optimize_display();
 
 					}, 500 )
