@@ -169,9 +169,11 @@ var get_vimeo_videoID = function( url ) {
 				vimeo_player.playerBox.css( {
 					position: "absolute",
 					zIndex: 0,
-					width: "100%",
-					height: "100%",
-					top: -10,
+					/*
+					 width: "100%",
+					 height: "100%",
+					 top: -10,
+					 */
 					frameBorder: 0,
 					overflow: "hidden",
 					left: 0
@@ -197,7 +199,7 @@ var get_vimeo_videoID = function( url ) {
 					setTimeout( function() {
 						var VEvent = jQuery.Event( 'VPFallback' );
 						$vimeo_player.trigger( VEvent );
-					}, 1000 )
+					}, 1000 );
 
 					$vimeo_player.hide();
 					return $vimeo_player;
@@ -225,9 +227,12 @@ var get_vimeo_videoID = function( url ) {
 					} );
 
 				vimeo_player.videoWrapper = wrapper;
-				vimeo_player.playerBox.css( {
-					opacity: 1
-				} );
+				/*
+				 vimeo_player.playerBox.css( {
+				 opacity: 1,
+				 frameBorder: 0
+				 } );
+				 */
 
 				if( !jQuery.browser.mobile ) {
 					vimeo_player.playerBox.after( overlay );
@@ -265,10 +270,10 @@ var get_vimeo_videoID = function( url ) {
 							if( vimeo_player.opt.autoPlay )
 
 								setTimeout( function() {
-									$vimeo_player.v_play();
-									VEvent = jQuery.Event( 'VPStart' );
-									$vimeo_player.trigger( VEvent );
-								}, vimeo_player.opt.fadeTime )
+								$vimeo_player.v_play();
+								VEvent = jQuery.Event( 'VPStart' );
+								$vimeo_player.trigger( VEvent );
+							}, vimeo_player.opt.fadeTime )
 
 							else
 								$vimeo_player.v_pause();
@@ -634,7 +639,6 @@ var get_vimeo_videoID = function( url ) {
 
 				jQuery( vimeo_player ).v_setState();
 
-
 			} )
 		},
 
@@ -675,9 +679,6 @@ var get_vimeo_videoID = function( url ) {
 			var vURL = "https://vimeo.com/" + vimeo_player.videoID;
 
 			var movieUrl = jQuery( "<span/>" ).html( jQuery.vimeo_player.controls.logo ).addClass( "vimeo_url vimeo_icon" ).attr( "title", "view on Vimeo" ).on( "click", function() {
-
-				//				console.debug( vURL );
-
 				window.open( vURL, "viewOnVimeo" )
 			} );
 
@@ -688,19 +689,21 @@ var get_vimeo_videoID = function( url ) {
 				timeBar.css( {
 					width: ( e.clientX - timeBar.offset().left )
 				} );
+
 				vimeo_player.timeW = e.clientX - timeBar.offset().left;
+
 				vimeo_player.controlBar.find( ".vimeo_player_loaded" ).css( {
 					width: 0
 				} );
 				var totalTime = Math.floor( vimeo_player.duration );
 				vimeo_player.goto = ( timeBar.outerWidth() * totalTime ) / progressBar.outerWidth();
 
-				//				console.debug( vimeo_player.goto );
-
 				jQuery( vimeo_player ).v_seekTo( parseFloat( vimeo_player.goto ) );
+
 				vimeo_player.controlBar.find( ".vimeo_player_loaded" ).css( {
 					width: 0
 				} );
+
 			} );
 			var loadedBar = jQuery( "<div/>" ).addClass( "vimeo_player_loaded" ).css( "position", "absolute" );
 			var timeBar = jQuery( "<div/>" ).addClass( "vimeo_player_seek_bar" ).css( "position", "absolute" );
@@ -741,12 +744,10 @@ var get_vimeo_videoID = function( url ) {
 			var vimeo_player = this.get( 0 );
 			var vid = {};
 
-
 			vimeo_player.opt.align = align || vimeo_player.opt.align;
 
 			vimeo_player.opt.align = typeof vimeo_player.opt.align != "undefined " ? vimeo_player.opt.align : "center,center";
 			var VimeoAlign = vimeo_player.opt.align.split( "," );
-
 
 			if( vimeo_player.opt.optimizeDisplay ) {
 				var abundance = vimeo_player.isPlayer ? 0 : 80;
@@ -773,7 +774,6 @@ var get_vimeo_videoID = function( url ) {
 					marginLeft: 0,
 					frameBorder: 0
 				} );
-
 
 				var lowest = vid.height < win.height;
 
@@ -830,6 +830,7 @@ var get_vimeo_videoID = function( url ) {
 			}
 
 			setTimeout( function() {
+
 				vimeo_player.playerBox.css( {
 					opacity: 1,
 					width: vid.width,
@@ -837,10 +838,10 @@ var get_vimeo_videoID = function( url ) {
 					marginTop: vid.marginTop,
 					marginLeft: vid.marginLeft,
 					maxWidth: "initial"
-
 				} );
 
 			}, 100 )
+
 		},
 
 		/**
@@ -849,7 +850,6 @@ var get_vimeo_videoID = function( url ) {
 		 */
 		setAlign: function( align ) {
 			var $vimeo_player = this;
-
 			$vimeo_player.v_optimize_display( align );
 		},
 		/**
@@ -861,7 +861,11 @@ var get_vimeo_videoID = function( url ) {
 			return vimeo_player.opt.align;
 		},
 
-
+		/**
+		 *
+		 * @param real
+		 * @returns {jQuery.vimeo_player}
+		 */
 		fullscreen: function( real ) {
 			var vimeo_player = this.get( 0 );
 			var $vimeo_player = jQuery( vimeo_player );
