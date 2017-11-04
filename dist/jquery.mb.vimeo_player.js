@@ -47,10 +47,10 @@ var get_vimeo_videoID = function( url ) {
 			autoPlay: true,
 			fadeTime: 1000,
 			vol: 50, // 1 to 100
-			addRaster: false,
+			addRaster: true,
 			opacity: 1,
 			mute: true,
-			loop: true,
+			loop: false,
 			showControls: true,
 			show_vimeo_logo: true,
 			stopMovieOnBlur: true,
@@ -286,11 +286,9 @@ var get_vimeo_videoID = function( url ) {
 								vimeo_player.opt.onReady( vimeo_player )
 
 							$vimeo_player.v_optimize_display();
-
 						}
 
 						if( vimeo_player.opt.startAt ) {
-
 
 							vimeo_player.player.play().then( function() {
 								vimeo_player.player.pause();
@@ -341,6 +339,28 @@ var get_vimeo_videoID = function( url ) {
 							VEvent.error = data;
 							$vimeo_player.trigger( VEvent );
 
+							//Add raster image
+							if( vimeo_player.opt.addRaster ) {
+								var classN = vimeo_player.opt.addRaster == "dot" ? "raster-dot" : "raster";
+								vimeo_player.overlay.addClass( vimeo_player.isRetina ? classN + " retina" : classN );
+							} else {
+								vimeo_player.overlay.removeClass( function( index, classNames ) {
+									// change the list into an array
+									var current_classes = classNames.split( " " ),
+									// array of classes which are to be removed
+											classes_to_remove = [];
+									jQuery.each( current_classes, function( index, class_name ) {
+										// if the classname begins with bg add it to the classes_to_remove array
+										if( /raster.*/.test( class_name ) ) {
+											classes_to_remove.push( class_name );
+										}
+									} );
+									classes_to_remove.push( "retina" );
+									// turn the array back into a string
+									return classes_to_remove.join( " " );
+								} )
+							}
+
 						} );
 
 						//PAUSE
@@ -373,6 +393,7 @@ var get_vimeo_videoID = function( url ) {
 							$vimeo_player.trigger( VEvent );
 
 						} );
+
 
 						//TIME UPDATE
 						vimeo_player.player.on( "timeupdate", function( data ) {
@@ -430,27 +451,6 @@ var get_vimeo_videoID = function( url ) {
 								} else {
 									vimeo_player.controlBar.find( ".vimeo_player_time" ).html( "-- : -- / -- : --" );
 								}
-							}
-
-							if( vimeo_player.opt.addRaster ) {
-								var classN = vimeo_player.opt.addRaster == "dot" ? "raster-dot" : "raster";
-								vimeo_player.overlay.addClass( vimeo_player.isRetina ? classN + " retina" : classN );
-							} else {
-								vimeo_player.overlay.removeClass( function( index, classNames ) {
-									// change the list into an array
-									var current_classes = classNames.split( " " ),
-										// array of classes which are to be removed
-										classes_to_remove = [];
-									jQuery.each( current_classes, function( index, class_name ) {
-										// if the classname begins with bg add it to the classes_to_remove array
-										if( /raster.*/.test( class_name ) ) {
-											classes_to_remove.push( class_name );
-										}
-									} );
-									classes_to_remove.push( "retina" );
-									// turn the array back into a string
-									return classes_to_remove.join( " " );
-								} )
 							}
 
 							vimeo_player.opt.stopAt = vimeo_player.opt.stopAt > data.duration ? data.duration - 0.5 : vimeo_player.opt.stopAt;
