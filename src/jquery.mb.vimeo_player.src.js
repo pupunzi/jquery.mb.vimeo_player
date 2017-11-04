@@ -634,14 +634,29 @@ var get_vimeo_videoID = function( url ) {
 
 		changeMovie: function( obj ) {
 
-			var vimeo_player = this.get( 0 );
-			vimeo_player.player.loadVideo( obj.url ).then( function( id ) {
+			var $vimeo_player = this;
+			var vimeo_player = $vimeo_player.get( 0 );
+			vimeo_player.opt.startAt = 0;
+			vimeo_player.opt.stopAt = 0;
+			vimeo_player.opt.mask = false;
+			vimeo_player.opt.mute = true;
+			vimeo_player.hasData = false;
+			vimeo_player.hasChanged = true;
+			vimeo_player.player.loopTime = undefined;
 
-				jQuery( vimeo_player ).v_setState();
+			if( obj )
+				jQuery.extend( vimeo_player.opt, obj );
 
+			if( vimeo_player.opt.loop == "true" )
+				vimeo_player.opt.loop = 9999;
+
+			vimeo_player.player.loadVideo( obj.videoURL ).then( function( id ) {
+				$vimeo_player.v_optimize_display();
+				jQuery( vimeo_player ).v_play();
+				if( vimeo_player.opt.startAt )
+					$vimeo_player.v_seekTo( vimeo_player.opt.startAt );
 			} )
 		},
-
 
 		buildControls: function( vimeo_player ) {
 			var data = vimeo_player.opt;
