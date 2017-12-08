@@ -106,6 +106,7 @@
 
 .vimeo_player_wrapper iframe {
     max-width: 4000px !important;
+    border: 0 !important;
 }
 
 .inline_vimeo_player {
