@@ -58,6 +58,7 @@ var get_vimeo_videoID = function( url ) {
 			mobileFallbackImage: null,
 			gaTrack: false,
 			optimizeDisplay: true,
+			abundance : 0.2,
 			mask: false,
 			align: "center,center", // top,bottom,left,right
 			onReady: function( player ) {}
@@ -751,14 +752,13 @@ var get_vimeo_videoID = function( url ) {
 			var vid = {};
 
 			vimeo_player.opt.align = align || vimeo_player.opt.align;
-
 			vimeo_player.opt.align = typeof vimeo_player.opt.align != "undefined " ? vimeo_player.opt.align : "center,center";
 			var VimeoAlign = vimeo_player.opt.align.split( "," );
 
 			if( vimeo_player.opt.optimizeDisplay ) {
 				var win = {};
 				var el = vimeo_player.videoWrapper;
-				var abundance = vimeo_player.isPlayer ? 0 : el.outerHeight() * .15;
+				var abundance = vimeo_player.opt.abundance;
 
 				win.width = el.outerWidth() + abundance;
 				win.height = el.outerHeight() + abundance;
