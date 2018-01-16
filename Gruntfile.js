@@ -79,6 +79,23 @@ module.exports = function (grunt) {
 				]
 			}
 		},
+        strip_code: {
+            options: {
+                blocks: [
+                    {
+                        start_block: "/* src-block */",
+                        end_block: "/* end-src-block */"
+                    },
+                    {
+                        start_block: "<!-- start-html-src-code -->",
+                        end_block: "<!-- end-html-src-code -->"
+                    }
+                ]
+            },
+            your_target: {
+                src: 'dist/*.js'
+            }
+        },
 
 		jsbeautifier: {
 			files  : ['src/*.js', '!dist/*.min.js', 'src/*.html', 'src/*.tmpl', 'src/css/*.css'],
@@ -108,7 +125,7 @@ module.exports = function (grunt) {
 					indentChar             : "\t",
 					indentLevel            : 0,
 					indentSize             : 1,
-					indentWithTabs         : true,
+					indentWithTabs         : false,
 					jslintHappy            : false,
 					keepArrayIndentation   : true,
 					keepFunctionIndentation: true,
@@ -118,7 +135,7 @@ module.exports = function (grunt) {
 					spaceInParen           : true,
 					unescapeStrings        : false,
 					wrapLineLength         : 0,
-					endWithNewline         : false
+					endWithNewline         : true
 				}
 			}
 		},
@@ -163,10 +180,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks("grunt-jsbeautifier");
+    grunt.loadNpmTasks('grunt-strip-code');
 
 	grunt.loadNpmTasks('grunt-build-number');
 	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['buildnumber', /*'jsbeautifier',*/ 'copy', 'concat', 'uglify', 'cssmin', 'includereplace']);
+	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace', 'strip_code']); //'jsbeautifier',
 
 };
