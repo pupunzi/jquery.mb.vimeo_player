@@ -108,7 +108,7 @@ module.exports = function (grunt) {
 					indentChar             : "\t",
 					indentLevel            : 0,
 					indentSize             : 1,
-					indentWithTabs         : false,
+					indentWithTabs         : true,
 					jslintHappy            : false,
 					keepArrayIndentation   : true,
 					keepFunctionIndentation: true,
@@ -118,7 +118,7 @@ module.exports = function (grunt) {
 					spaceInParen           : true,
 					unescapeStrings        : false,
 					wrapLineLength         : 0,
-					endWithNewline         : true
+					endWithNewline         : false
 				}
 			}
 		},
@@ -167,6 +167,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-build-number');
 	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['buildnumber', 'jsbeautifier', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace']);
+	grunt.registerTask('default', ['buildnumber', /*'jsbeautifier',*/ 'copy', 'concat', 'uglify', 'cssmin', 'includereplace']);
 
 };
