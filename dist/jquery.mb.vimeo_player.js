@@ -19,6 +19,7 @@
  _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
  ___________________________________________________________________________________________________________________________________________________*/
 
+
 var get_vimeo_videoID = function( url ) {
 
 	var videoID;
@@ -37,7 +38,7 @@ var get_vimeo_videoID = function( url ) {
 		name: "jquery.mb.vimeo_player",
 		author: "Matteo Bicocchi (pupunzi)",
 		version: "1.1.2",
-		build: "461",
+		build: "463",
 		defaults: {
 			containment: "body",
 			ratio: "16/9", // "16/9" or "4/3"
@@ -86,7 +87,6 @@ var get_vimeo_videoID = function( url ) {
 				return isIfr;
 			};
 
-
 			var script = document.createElement( 'script' );
 			script.src = "//player.vimeo.com/api/player.js";
 			script.onload = function() {
@@ -114,7 +114,6 @@ var get_vimeo_videoID = function( url ) {
 					vimeo_player.opt.loop = 9999;
 
 				vimeo_player.isRetina = ( window.retina || window.devicePixelRatio > 1 );
-
 
 				vimeo_player.canGoFullScreen = !( jQuery.browser.msie || jQuery.browser.opera || isIframe() );
 				if( !vimeo_player.canGoFullScreen ) vimeo_player.opt.realfullscreen = false;
@@ -393,8 +392,6 @@ var get_vimeo_videoID = function( url ) {
 						//TIME UPDATE
 						vimeo_player.player.on( "timeupdate", function( data ) {
 
-							//							console.debug( "2. timeupdate:: ", data );
-
 							vimeo_player.duration = data.duration;
 							vimeo_player.percent = data.percent;
 							vimeo_player.seconds = data.seconds;
@@ -548,11 +545,6 @@ var get_vimeo_videoID = function( url ) {
 
 			var vimeo_player = this.get( 0 );
 
-			/*
-			 console.debug( "setVolume:: ", val );
-			 console.debug( "volume:: ", vimeo_player.opt.vol );
-			 */
-
 			if( !val && !vimeo_player.opt.vol && vimeo_player.isMute )
 				jQuery( vimeo_player ).v_unmute();
 			else if( ( !val && !vimeo_player.isMute ) || ( val && vimeo_player.opt.vol == val ) ) {
@@ -625,7 +617,6 @@ var get_vimeo_videoID = function( url ) {
 		},
 
 		changeMovie: function( obj ) {
-
 			var $vimeo_player = this;
 			var vimeo_player = $vimeo_player.get( 0 );
 			vimeo_player.opt.startAt = 0;
@@ -840,10 +831,10 @@ var get_vimeo_videoID = function( url ) {
 			var $vimeo_player = this;
 			$vimeo_player.v_optimize_display( align );
 		},
-		/**
+
+        /**
 		 *
-		 * @param align
-		 */
+         */
 		getAlign: function() {
 			var vimeo_player = this.get( 0 );
 			return vimeo_player.opt.align;
