@@ -44,7 +44,7 @@ var get_vimeo_videoID = function( url ) {
     build: "{{ buildnum }}",
     defaults: {
       containment: "body",
-      ratio: "16/9", // "16/9" or "4/3"
+      ratio: 16/9, // "16/9" or "4/3"
       videoURL: null,
       startAt: 0,
       stopAt: 0,
@@ -110,8 +110,7 @@ var get_vimeo_videoID = function( url ) {
         var property = $vimeo_player.data( "property" ) && typeof $vimeo_player.data( "property" ) == "string" ? eval( '(' + $vimeo_player.data( "property" ) + ')' ) : $vimeo_player.data( "property" );
 
         jQuery.extend( vimeo_player.opt, jQuery.vimeo_player.defaults, options, property );
-
-        //				vimeo_player.opt.ratio = vimeo_player.opt.ratio == "auto" ? "16/9" : vimeo_player.opt.ratio;
+        vimeo_player.opt.ratio = vimeo_player.opt.ratio == "auto" ? 16/9 : vimeo_player.opt.ratio;
 
         if( eval( vimeo_player.opt.loop ) )
           vimeo_player.opt.loop = 9999;
