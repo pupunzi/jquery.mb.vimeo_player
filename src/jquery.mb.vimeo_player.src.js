@@ -301,7 +301,10 @@ var get_vimeo_videoID = function( url ) {
             }
 
             jQuery( window ).off( "resize.vimeo_player_" + vimeo_player.id ).on( "resize.vimeo_player_" + vimeo_player.id, function() {
-              $vimeo_player.v_optimize_display();
+              clearTimeout(vimeo_player.optimizeD);
+	            vimeo_player.optimizeD = setTimeout(function(){
+		            $vimeo_player.v_optimize_display();
+              },150)
             } );
 
             //PROGRESS
@@ -819,7 +822,7 @@ var get_vimeo_videoID = function( url ) {
           marginLeft: vid.marginLeft,
           maxWidth: "initial"
         } );
-      }, 100 )
+      }, 10 )
     },
 
     /**
