@@ -7,8 +7,6 @@ module.exports = function (grunt) {
 			dist: {
 				files: [
 					{flatten: true, expand: true, cwd: '../jquery.mb.browser/inc/', src: ['jquery.mb.browser.min.js'], dest: 'src/dep/'},
-//					{flatten: true, expand: true, cwd: '../jquery.mb.storage/inc/', src: ['jquery.mb.storage.min.js'], dest: 'src/dep/'},
-//					{flatten: true, expand: true, cwd: '../jquery.mb.CSSAnimate/inc/', src: ['jquery.mb.CSSAnimate.min.js'], dest: 'src/dep/'},
 					{flatten: true, expand: true, cwd: '../jquery.mb.simpleSlider/inc/', src: ['jquery.mb.simpleSlider.min.js'], dest: 'src/dep/'},
 					{flatten: false, expand: true, cwd: 'src/css/font/', src: ['**'], dest: 'dist/css/font/'},
 					{flatten: false, expand: true, cwd: 'src/css/images/', src: ['**'], dest: 'dist/css/images/'},
@@ -185,6 +183,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-build-number');
 	grunt.loadNpmTasks('grunt-bump');
 
-	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'uglify', 'cssmin', 'includereplace', 'strip_code']); //'jsbeautifier',
+	grunt.registerTask('default', ['buildnumber', 'copy', 'concat', 'strip_code', 'uglify', 'cssmin', 'includereplace']); //'jsbeautifier',
 
 };
