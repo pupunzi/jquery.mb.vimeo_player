@@ -49,7 +49,7 @@ var get_vimeo_videoID = function( url ) {
       startAt: 0,
       stopAt: 0,
       autoPlay: true,
-      fadeTime: 10,
+      fadeTime: 10000,
       vol: 5, // 1 to 10
       addRaster: false,
       opacity: 1,
@@ -506,9 +506,7 @@ var get_vimeo_videoID = function( url ) {
       vimeo_player.player.play();
       setTimeout( function() {
         vimeo_player.videoWrapper.fadeTo( vimeo_player.opt.fadeTime, vimeo_player.opt.opacity );
-
         //console.timeEnd("Vimeo_start");
-
       }, 800 );
 
       var controls = jQuery( "#controlBar_" + vimeo_player.id );

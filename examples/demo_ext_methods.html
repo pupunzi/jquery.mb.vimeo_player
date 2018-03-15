@@ -185,13 +185,6 @@
 
             }).on("VPReady", function(e){
 
-/*
-                console.debug(e);
-                setTimeout(function(){
-                    myPlayer.v_play();
-                }, 1000);
-
-*/
                 if(!e.opt.autoPlay)
                     $("#loader").hide();
 
@@ -202,9 +195,6 @@
 </head>
 <body>
 <div id="wrapper" style="position:relative; padding:10px 0;z-index:10">
-
-    <!--<iframe src="https://player.vimeo.com/video/12199910?autoplay=1&loop=1&color=ffffff&title=0&byline=0&portrait=0" width="1422" height="800" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
-
     <h1 style="color:white">jQuery.mb.vimeo_player</h1>
     <h2 style="color:white; text-align: center">An HTML5 Background player<br>for Vimeo's video</h2>
     <h2 id="time" style="color:white; text-align: center">0 sec.</h2>
