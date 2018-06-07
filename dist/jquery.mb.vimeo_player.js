@@ -38,7 +38,7 @@ var get_vimeo_videoID = function( url ) {
     name: "jquery.mb.vimeo_player",
     author: "Matteo Bicocchi (pupunzi)",
     version: "1.1.7",
-    build: "502",
+    build: "533",
     defaults: {
       containment: "body",
       ratio: 16/9, // "16/9" or "4/3"
@@ -56,6 +56,7 @@ var get_vimeo_videoID = function( url ) {
       show_vimeo_logo: true,
       stopMovieOnBlur: true,
       realfullscreen: true,
+      playOnMobile: true,
       mobileFallbackImage: null,
       gaTrack: false,
       optimizeDisplay: true,
@@ -134,7 +135,7 @@ var get_vimeo_videoID = function( url ) {
         if( vimeo_player.isBackground && vimeo_player.backgroundIsInited )
           return;
 
-        vimeo_player.canPlayOnMobile = vimeo_player.isSelf && jQuery( this ).children().length === 0;
+        vimeo_player.canPlayOnMobile = (vimeo_player.opt.playOnMobile || (vimeo_player.isSelf && jQuery( this ).children().length === 0)) && jQuery.browser.mobile;
 
         if( !vimeo_player.isSelf ) {
           $vimeo_player.hide();
@@ -168,45 +169,7 @@ var get_vimeo_videoID = function( url ) {
           opacity: 0
         } );
 
-        vimeo_player.playerBox = jQuery( "<iframe/>" ).attr( "id", playerID ).addClass( "playerBox" );
-        vimeo_player.playerBox.css( {
-          position: "absolute",
-          zIndex: 0,
-          /*
-           width: "100%",
-           height: "100%",
-           top: -10,
-           */
-          frameBorder: 0,
-          overflow: "hidden",
-          left: 0
-        } ).attr( {
-          src: "//player.vimeo.com/video/" + vimeo_player.videoID + "?background=1"
-        } );
-
         vimeo_player.opt.containment.prepend( wrapper );
-
-        if( !jQuery.browser.mobile || vimeo_player.canPlayOnMobile )
-          wrapper.append( vimeo_player.playerBox );
-        else {
-          if( vimeo_player.opt.mobileFallbackImage ) {
-            wrapper.css( {
-              backgroundImage: "url(" + vimeo_player.opt.mobileFallbackImage + ")",
-              backgroundPosition: "center center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              opacity: 1
-            } )
-          };
-
-          setTimeout( function() {
-            var VEvent = jQuery.Event( 'VPFallback' );
-            $vimeo_player.trigger( VEvent );
-          }, 1000 );
-
-          $vimeo_player.hide();
-          return $vimeo_player;
-        }
 
         vimeo_player.opt.containment.children().not( "script, style" ).each( function() {
           if( jQuery( this ).css( "position" ) == "static" ) jQuery( this ).css( "position", "relative" );
@@ -230,17 +193,7 @@ var get_vimeo_videoID = function( url ) {
           } );
 
         vimeo_player.videoWrapper = wrapper;
-        /*
-         vimeo_player.playerBox.css( {
-         opacity: 1,
-         frameBorder: 0
-         } );
-         */
-
-        if( !jQuery.browser.mobile ) {
-          vimeo_player.playerBox.after( overlay );
-          vimeo_player.overlay = overlay;
-        }
+        vimeo_player.overlay = overlay;
 
         if( !vimeo_player.isBackground ) {
           overlay.on( "mouseenter", function() {
@@ -254,14 +207,24 @@ var get_vimeo_videoID = function( url ) {
 
         jQuery( document ).on( "vimeo_api_loaded", function() {
 
-          vimeo_player.player = new Vimeo.Player( playerID, options );
+          var options = {
+            id: vimeo_player.opt.videoURL,
+            muted: vimeo_player.canPlayOnMobile ? 1 : 0,
+            background: 1,
+            autoplay: vimeo_player.canPlayOnMobile ? 1 : 0
+          };
+
+          // console.debug(options);
+
+          vimeo_player.player = new Vimeo.Player( vimeo_player.videoWrapper.get(0).id, options );
           vimeo_player.player.ready().then( function() {
+            vimeo_player.playerBox = vimeo_player.videoWrapper.find("iframe");
+            vimeo_player.playerBox.after( overlay );
 
             var VEvent;
-
             function start() {
               vimeo_player.isReady = true;
-              if( vimeo_player.opt.mute ) {
+              if( vimeo_player.opt.mute  && !vimeo_player.canPlayOnMobile) {
                 setTimeout( function() {
                   $vimeo_player.v_mute();
                 }, 1 );
@@ -270,18 +233,24 @@ var get_vimeo_videoID = function( url ) {
               if( vimeo_player.opt.showControls )
                 jQuery.vimeo_player.buildControls( vimeo_player );
 
-              if( vimeo_player.opt.autoPlay ) {
-                setTimeout(function () {
-                  vimeo_player.player.pause();
-                  $vimeo_player.v_play();
-                  VEvent = jQuery.Event('VPStart');
-                  $vimeo_player.trigger(VEvent);
-                  $vimeo_player.v_optimize_display();
-                }, vimeo_player.opt.fadeTime)
-              } else {
-                $vimeo_player.v_pause();
-              }
+              if(!vimeo_player.canPlayOnMobile) {
 
+                if (vimeo_player.opt.autoPlay) {
+                  setTimeout(function () {
+                    vimeo_player.player.pause();
+                    $vimeo_player.v_play();
+                    VEvent = jQuery.Event('VPStart');
+                    $vimeo_player.trigger(VEvent);
+                    $vimeo_player.v_optimize_display();
+                  }, vimeo_player.opt.fadeTime)
+                } else {
+                  $vimeo_player.v_pause();
+                }
+              } else {
+                setTimeout( function() {
+                  vimeo_player.videoWrapper.fadeTo( vimeo_player.opt.fadeTime, vimeo_player.opt.opacity );
+                }, 1000 );
+              }
               VEvent = jQuery.Event( 'VPReady' );
               VEvent.opt = vimeo_player.opt;
               $vimeo_player.trigger( VEvent );
