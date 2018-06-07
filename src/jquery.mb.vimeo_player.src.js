@@ -212,7 +212,7 @@ var get_vimeo_videoID = function( url ) {
           
           var options = {
             id: vimeo_player.opt.videoURL,
-            muted: vimeo_player.playOnMobile ? 1 : 0,
+            muted: vimeo_player.opt.mute ? 1 : 0,
             background: 1,
             autoplay: vimeo_player.playOnMobile ? 1 : 0
           };
@@ -554,9 +554,15 @@ var get_vimeo_videoID = function( url ) {
     
     mute: function() {
       var vimeo_player = this.get( 0 );
-      
+  
+  
       if( vimeo_player.isMute )
-        return;
+        return this;
+  
+      if(vimeo_player.playOnMobile) {
+        vimeo_player.player.toggleMute();
+        }
+  
       vimeo_player.isMute = true;
       vimeo_player.player.setVolume( 0 );
       
@@ -584,6 +590,10 @@ var get_vimeo_videoID = function( url ) {
       
       vimeo_player.isMute = false;
       
+      if(vimeo_player.playOnMobile) {
+        vimeo_player.player.toggleMute();
+      }
+  
       jQuery( vimeo_player ).v_set_volume( vimeo_player.opt.vol );
       
       if( vimeo_player.volumeBar && vimeo_player.volumeBar.length ) vimeo_player.volumeBar.updateSliderVal( vimeo_player.opt.vol > .1 ? vimeo_player.opt.vol : .1 );
