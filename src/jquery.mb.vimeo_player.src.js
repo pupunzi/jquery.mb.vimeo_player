@@ -554,8 +554,7 @@ var get_vimeo_videoID = function( url ) {
     
     mute: function() {
       var vimeo_player = this.get( 0 );
-  
-  
+    
       if( vimeo_player.isMute )
         return this;
   
