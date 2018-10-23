@@ -6,7 +6,7 @@
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
- _ email: matteo@open-lab.com                                                                                                                       _
+ _ email: matbicoc@gmail.com                                                                                                                       _
  _ site: http://pupunzi.com                                                                                                                         _
  _       http://open-lab.com                                                                                                                        _
  _ blog: http://pupunzi.open-lab.com                                                                                                                _
@@ -983,7 +983,7 @@ var get_vimeo_videoID = function( url ) {
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
- _ email: matteo@open-lab.com                                                                                                                       _
+ _ email: matbicoc@gmail.com                                                                                                                       _
  _ site: http://pupunzi.com                                                                                                                         _
  _       http://open-lab.com                                                                                                                        _
  _ blog: http://pupunzi.open-lab.com                                                                                                                _
@@ -1017,7 +1017,7 @@ jQuery.browser.versionCompare=function(a,e){if("stringstring"!=typeof a+typeof e
  _                                                                                                                                                  _
  _ Open Lab s.r.l., Florence - Italy                                                                                                                _
  _                                                                                                                                                  _
- _ email: matteo@open-lab.com                                                                                                                       _
+ _ email: matbicoc@gmail.com                                                                                                                       _
  _ site: http://pupunzi.com                                                                                                                         _
  _       http://open-lab.com                                                                                                                        _
  _ blog: http://pupunzi.open-lab.com                                                                                                                _
