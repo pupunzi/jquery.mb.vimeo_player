@@ -1,23 +1,23 @@
-/*___________________________________________________________________________________________________________________________________________________
- _ jquery.mb.components                                                                                                                             _
- _                                                                                                                                                  _
- _ file: jquery.mb.vimeo_player.js                                                                                                                   _
- _ last modified: 26/12/16 15.39                                                                                                                    _
- _                                                                                                                                                  _
- _ Open Lab s.r.l., Florence - Italy                                                                                                                _
- _                                                                                                                                                  _
- _ email: matbicoc@gmail.com                                                                                                                       _
- _ site: http://pupunzi.com                                                                                                                         _
- _       http://open-lab.com                                                                                                                        _
- _ blog: http://pupunzi.open-lab.com                                                                                                                _
- _ Q&A:  http://jquery.pupunzi.com                                                                                                                  _
- _                                                                                                                                                  _
- _ Licences: MIT, GPL                                                                                                                               _
- _    http://www.opensource.org/licenses/mit-license.php                                                                                            _
- _    http://www.gnu.org/licenses/gpl.html                                                                                                          _
- _                                                                                                                                                  _
- _ Copyright (c) 2001-2016. Matteo Bicocchi (Pupunzi);                                                                                              _
- ___________________________________________________________________________________________________________________________________________________*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+ jquery.mb.components
+ 
+ file: jquery.mb.vimeo_player.js
+ last modified: 10/25/18 8:00 PM
+ Version:  {{ version }}
+ Build:  {{ buildnum }}
+ 
+ Open Lab s.r.l., Florence - Italy 
+ email:  matteo@open-lab.com
+ blog: 	http://pupunzi.open-lab.com
+ site: 	http://pupunzi.com
+ 	http://open-lab.com 
+ 
+ Licences: MIT, GPL
+ http://www.opensource.org/licenses/mit-license.php
+ http://www.gnu.org/licenses/gpl.html
+ 
+ Copyright (c) 2001-2018. Matteo Bicocchi (Pupunzi)
+ :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 
 var get_vimeo_videoID = function( url ) {
