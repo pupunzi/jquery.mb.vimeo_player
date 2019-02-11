@@ -215,6 +215,9 @@
         <button onclick="myPlayer.v_set_align('left,top')">v_set_align (top/left)</button>
         <button onclick="myPlayer.v_set_align('center,center')">v_set_align (center/center)</button>
         <button onclick="myPlayer.v_set_align('right,bottom')">v_set_align (right/bottom)</button>
+
+
+        <button onclick="console.debug(myPlayer.v_get_align())">v_get_align ()</button>
         <br><br>
         <button onclick="myPlayer.v_fullscreen()">v_fullscreen</button>
         <button onclick="jQuery('#bgndVideo').v_change_movie({videoURL:'240466644',ratio:16/9, startAt:10, loop:false, addRaster:true})">v_change_movie</button>
@@ -227,9 +230,45 @@
         <img border="0" alt="PayPal" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG_global.gif" class="alignright">
     </a>
     <!--https://vimeo.com/14352658, 82820412, 16917950, 56810854, 35396305, 12199910 https://vimeo.com/202763350-->
+    <a id="bgndVideo" class="playera"
+       data-property="
+       {videoURL:'12199910',
+       containment:'body',
+       showControls:false,
+       fadeTime:100,
+       autoPlay:true,
+       loop:true,
+       vol:50,
+       mute:true,
+       startAt:0,
+       stopAt:215,
+       opacity:1,
+       addRaster:false
+       }">My video</a>
 
 
-    <a id="bgndVideo" class="player" data-property="{videoURL:'12199910',containment:'body', showControls:false, fadeTime:100, autoPlay:true, loop:true, vol:50, mute:true, startAt:0, stopAt:215, opacity:1, addRaster:false}">My video</a>
+    <a id="bgndVideo1" class="player"
+       data-property="{
+       videoURL:'https://vimeo.com/314877075',
+       mobileFallbackImage:'http://kinis-kitchen.de/wp-content/themes/suki-child/pics/king-kong1.png',
+       opacity:1,
+       autoPlay:true,
+       containment:'body',
+       startAt:1, stopAt:0,
+       mute:true,
+       vol:30,
+       optimizeDisplay:true,
+       showControls:false,
+       printUrl:false,
+       loop:true,
+       addRaster:false,
+       ratio:'16/9',
+       realfullscreen:true,
+       gaTrack:false,
+       stopMovieOnBlur:false}">My video</a>
+
+
+
 
 </div>
 
