@@ -175,6 +175,25 @@ var get_vimeo_videoID = function (url) {
         
         vimeo_player.wrapper = wrapper;
         vimeo_player.opt.containment.prepend(wrapper);
+  
+        if( vimeo_player.opt.mobileFallbackImage && jQuery.browser.mobile ) {
+          
+          wrapper.css( {
+            backgroundImage: "url(" + vimeo_player.opt.mobileFallbackImage + ")",
+            backgroundPosition: "center center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            opacity: 1
+          } )
+    
+          setTimeout( function() {
+            var VEvent = jQuery.Event( 'VPFallback' );
+            $vimeo_player.trigger( VEvent );
+          }, 1000 );
+    
+          $vimeo_player.hide();
+          return $vimeo_player;
+        }
         
         vimeo_player.opt.containment.children().not("script, style").each(function () {
           if (jQuery(this).css("position") == "static") jQuery(this).css("position", "relative");
@@ -620,7 +639,7 @@ var get_vimeo_videoID = function (url) {
       var vimeo_player = this.get(0);
       if (!vimeo_player.isReady)
         return this;
-  
+      
       vimeo_player.player.destroy().then(function() {
         // the player was destroyed
         vimeo_player.loop = 0;

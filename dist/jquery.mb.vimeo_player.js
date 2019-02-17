@@ -4,7 +4,7 @@
  file: jquery.mb.vimeo_player.src.js
  last modified: 10/25/18 8:00 PM
  Version:  1.1.9
- Build:  544
+ Build:  545
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -38,7 +38,7 @@ var get_vimeo_videoID = function (url) {
     name    : "jquery.mb.vimeo_player",
     author  : "Matteo Bicocchi (pupunzi)",
     version : "1.1.9",
-    build   : "544",
+    build   : "545",
     defaults: {
       containment        : "body",
       ratio              : 16 / 9, // "16/9" or "4/3"
@@ -172,6 +172,25 @@ var get_vimeo_videoID = function (url) {
         
         vimeo_player.wrapper = wrapper;
         vimeo_player.opt.containment.prepend(wrapper);
+  
+        if( vimeo_player.opt.mobileFallbackImage && jQuery.browser.mobile ) {
+          
+          wrapper.css( {
+            backgroundImage: "url(" + vimeo_player.opt.mobileFallbackImage + ")",
+            backgroundPosition: "center center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            opacity: 1
+          } )
+    
+          setTimeout( function() {
+            var VEvent = jQuery.Event( 'VPFallback' );
+            $vimeo_player.trigger( VEvent );
+          }, 1000 );
+    
+          $vimeo_player.hide();
+          return $vimeo_player;
+        }
         
         vimeo_player.opt.containment.children().not("script, style").each(function () {
           if (jQuery(this).css("position") == "static") jQuery(this).css("position", "relative");
@@ -617,7 +636,7 @@ var get_vimeo_videoID = function (url) {
       var vimeo_player = this.get(0);
       if (!vimeo_player.isReady)
         return this;
-  
+      
       vimeo_player.player.destroy().then(function() {
         // the player was destroyed
         vimeo_player.loop = 0;
