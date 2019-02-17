@@ -785,6 +785,7 @@ var get_vimeo_videoID = function (url) {
       var VimeoAlign = vimeo_player.opt.align.split(",");
       
       if (vimeo_player.opt.optimizeDisplay) {
+
         var win = {};
         var el = vimeo_player.videoWrapper;
         var abundance = vimeo_player.isPlayer ? 0 : el.outerHeight() * .15;
