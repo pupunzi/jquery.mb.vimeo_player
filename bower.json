@@ -1,6 +1,6 @@
 {
   "name": "jquery.mb.vimeo_player",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "homepage": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-vimeo_player",
   "authors": [
     "pupunzi <matbicoc@gmail.com>"
@@ -22,5 +22,5 @@
     "test",
     "tests"
   ],
-  "buildnum": "547"
+  "buildnum": "549"
 }

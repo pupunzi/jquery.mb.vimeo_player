@@ -3,8 +3,8 @@
  
  file: jquery.mb.vimeo_player.src.js
  last modified: 10/25/18 8:00 PM
- Version:  1.1.9
- Build:  547
+ Version:  1.2.0
+ Build:  549
  
  Open Lab s.r.l., Florence - Italy
  email:  matteo@open-lab.com
@@ -37,8 +37,8 @@ var get_vimeo_videoID = function (url) {
 	jQuery.vimeo_player = {
 		name    : 'jquery.mb.vimeo_player',
 		author  : 'Matteo Bicocchi (pupunzi)',
-		version : '1.1.9',
-		build   : '547',
+		version : '1.2.0',
+		build   : '549',
 		defaults: {
 			containment        : 'body',
 			ratio              : 16 / 9, // "16/9" or "4/3"
