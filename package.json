@@ -25,7 +25,7 @@
   "docs": "https://github.com/pupunzi/jquery.mb.YTPlayer/wiki",
   "download": "http://pupunzi.open-lab.com/mb-jquery-components/jquery-mb-vimeo_player/",
   "dependencies": {
-    "jquery": ">=1.8"
+    "jquery": "^3.5.1"
   },
   "main": "dist/jquery.mb.vimeo_player.js",
   "scripts": {
@@ -42,7 +42,7 @@
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-cssmin": "^0.12.3",
-    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-uglify": "^4.0.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-include-replace": "^3.0.0",
     "grunt-jsbeautifier": "^0.2.10",
@@ -51,5 +51,5 @@
   "directories": {
     "example": "examples"
   },
-  "buildnum": "562"
+  "buildnum": "567"
 }
