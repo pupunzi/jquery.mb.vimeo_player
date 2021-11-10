@@ -597,7 +597,7 @@ let get_vimeo_videoID = function (url) {
 				return this;
 
 			if (vimeo_player.playOnMobile) {
-				vimeo_player.player.toggleMute()
+				vimeo_player.player.setMuted(true)
 			}
 
 			vimeo_player.isMute = true;
@@ -628,7 +628,7 @@ let get_vimeo_videoID = function (url) {
 			vimeo_player.isMute = false;
 
 			if (vimeo_player.playOnMobile) {
-				vimeo_player.player.toggleMute()
+				vimeo_player.player.setMuted(false)
 			}
 
 			jQuery(vimeo_player).v_set_volume(vimeo_player.opt.vol);
