@@ -68,6 +68,7 @@ let get_vimeo_videoID = function (url) {
 			gaTrack            : false,
 			optimizeDisplay    : true,
 			mask               : false,
+			dnt				   : 0,
 			align              : 'center,center', // top,bottom,left,right
 			onReady            : function (player) {
 			}
@@ -246,7 +247,8 @@ let get_vimeo_videoID = function (url) {
 						background : 1,
 						quality    : vimeo_player.opt.quality,
 						autoplay   : vimeo_player.playOnMobile ? 1 : 0,
-						playsinline: vimeo_player.playOnMobile ? 1 : 0
+						playsinline: vimeo_player.playOnMobile ? 1 : 0,
+						dnt		   : vimeo_player.opt.dnt ? 1 : 0
 					};
 
 					// console.debug(options);
